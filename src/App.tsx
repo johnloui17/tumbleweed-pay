@@ -9,7 +9,7 @@ import {
   EmailStep,
   CreatePasswordStep, 
   SuccessModal 
-} from './components/steps'
+} from './components/onboarding'
 import { useState, useEffect } from 'react'
 import { useRegistrationStore } from './store/registrationStore'
 

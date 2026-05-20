@@ -1,9 +1,6 @@
-import { useForm, Controller } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { otpSchema, type OtpFormData } from '../../schemas'
-import { useRegistrationStore } from '../../store/registrationStore'
-import { Button, OtpInput } from '../ui'
-import { useOtpTimer } from '../../hooks'
+import { Controller } from 'react-hook-form'
+import { Button, OtpInput } from '../../ui'
+import { useOtpVerificationForm } from './useOtpVerificationForm'
 
 interface Props {
   onNext: () => void
@@ -15,18 +12,15 @@ interface Props {
  * Verifies the user's mobile number via a 4-digit code.
  */
 export function OtpVerificationStep({ onNext, onBack }: Props) {
-  const { otp, setField } = useRegistrationStore()
-  const { seconds, canResend, resend } = useOtpTimer()
-  
-  const { control, handleSubmit, formState: { errors } } = useForm<OtpFormData>({
-    resolver: zodResolver(otpSchema),
-    defaultValues: { otp: otp || '' },
-  })
-
-  const onSubmit = (data: OtpFormData) => {
-    setField('otp', data.otp)
-    onNext()
-  }
+  const {
+    control,
+    handleSubmit,
+    errors,
+    onSubmit,
+    seconds,
+    canResend,
+    resend
+  } = useOtpVerificationForm({ onNext })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">

@@ -1,10 +1,6 @@
-import { useState } from 'react'
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { mobileSchema, type MobileFormData } from '../../schemas'
-import { useRegistrationStore } from '../../store/registrationStore'
-import { Button, FormField, CountryCodeSelector } from '../ui'
-import { cn } from '../../utils'
+import { Button, CountryCodeSelector } from '../../ui'
+import { cn } from '../../../utils'
+import { useMobileNumberForm } from './useMobileNumberForm'
 
 interface Props {
   onNext: () => void
@@ -16,19 +12,14 @@ interface Props {
  * Collects the user's mobile number for verification.
  */
 export function MobileNumberStep({ onNext, onBack }: Props) {
-  const { mobile, setField } = useRegistrationStore()
-  const [dialCode, setDialCode] = useState('+1')
-  
-  const { register, handleSubmit, formState: { errors } } = useForm<MobileFormData>({
-    resolver: zodResolver(mobileSchema),
-    defaultValues: { mobile },
-  })
-
-  const onSubmit = (data: MobileFormData) => {
-    // We could prepend dialCode here if the backend expects the full number
-    setField('mobile', data.mobile)
-    onNext()
-  }
+  const {
+    dialCode,
+    setDialCode,
+    register,
+    handleSubmit,
+    errors,
+    onSubmit
+  } = useMobileNumberForm({ onNext })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">

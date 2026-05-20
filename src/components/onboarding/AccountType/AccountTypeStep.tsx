@@ -1,10 +1,7 @@
-import { useForm } from 'react-hook-form'
-import { zodResolver } from '@hookform/resolvers/zod'
-import { accountTypeSchema, type AccountTypeFormData } from '../../schemas'
-import { useRegistrationStore } from '../../store/registrationStore'
-import { Button } from '../ui'
-import { cn } from '../../utils'
+import { Button } from '../../ui'
+import { cn } from '../../../utils'
 import { User, Briefcase, CheckCircle2 } from 'lucide-react'
+import { useAccountTypeForm } from './useAccountTypeForm'
 
 interface Props {
   onNext: () => void
@@ -16,19 +13,13 @@ interface Props {
  * Allows the user to select between a Personal or Business account.
  */
 export function AccountTypeStep({ onNext, onBack }: Props) {
-  const { accountType, setField } = useRegistrationStore()
-
-  const { handleSubmit, setValue, watch, formState: { errors } } = useForm<AccountTypeFormData>({
-    resolver: zodResolver(accountTypeSchema),
-    defaultValues: { accountType: accountType || undefined },
-  })
-
-  const currentType = watch('accountType')
-
-  const onSubmit = (data: AccountTypeFormData) => {
-    setField('accountType', data.accountType)
-    onNext()
-  }
+  const { 
+    currentType, 
+    errors, 
+    handleSubmit, 
+    onSubmit, 
+    handleSelectType 
+  } = useAccountTypeForm({ onNext })
 
   const options = [
     { id: 'personal', label: 'Personal', icon: User },
@@ -47,7 +38,7 @@ export function AccountTypeStep({ onNext, onBack }: Props) {
             <button
               key={opt.id}
               type="button"
-              onClick={() => setValue('accountType', opt.id, { shouldValidate: true })}
+              onClick={() => handleSelectType(opt.id as 'personal' | 'business')}
               className={cn(
                 'w-full max-w-lg min-h-[4.75rem] flex items-center gap-4 lg:gap-6 px-4 lg:px-8 py-4 rounded-2xl border transition-all duration-200 outline-none',
                 currentType === opt.id
@@ -101,4 +92,3 @@ export function AccountTypeStep({ onNext, onBack }: Props) {
     </form>
   )
 }
-

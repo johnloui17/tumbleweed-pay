@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
 export const accountTypeSchema = z.object({
-  accountType: z.enum(['personal', 'business'], {
-    errorMap: () => ({ message: 'Please select an account type' }),
+  accountType: z.enum(['personal', 'business'] as const, {
+    message: 'Please select an account type',
   }),
 })
 
