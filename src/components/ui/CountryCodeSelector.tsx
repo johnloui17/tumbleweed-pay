@@ -9,7 +9,7 @@ export interface CountryCode {
   dialCode: string
 }
 
-export const COUNTRIES: CountryCode[] = [
+const COUNTRIES: CountryCode[] = [
   { code: 'US', flag: '🇺🇸', name: 'United States', dialCode: '+1' },
   { code: 'GB', flag: '🇬🇧', name: 'United Kingdom', dialCode: '+44' },
   { code: 'IN', flag: '🇮🇳', name: 'India', dialCode: '+91' },

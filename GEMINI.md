@@ -15,7 +15,7 @@ The project is organized by **Type/Domain**, using standard naming conventions a
 - `src/schemas/`: Zod validation schemas for form steps.
 - `src/store/`: Zustand state management (`registrationStore`).
 - `src/types/`: Shared TypeScript interfaces and types.
-- `src/utils/`: Generic helper functions (e.g., `cn`, `passwordStrength`).
+- `src/utils/`: Generic helper functions (e.g., `cn`).
 - `tests/unit/`: Vitest unit tests (mirrors `src` structure).
 - `tests/e2e/`: Playwright browser automation and visual regression tests.
 

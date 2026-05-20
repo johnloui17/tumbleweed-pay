@@ -18,7 +18,7 @@ src/
 ├── schemas/          # Zod validation schemas for form steps
 ├── store/            # Zustand state management (registrationStore)
 ├── types/            # Shared TypeScript interfaces and types
-└── utils/            # Generic helper functions (cn, passwordStrength)
+└── utils/            # Generic helper functions (cn)
 ```
 
 ### Key Technical Choices

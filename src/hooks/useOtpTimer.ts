@@ -15,9 +15,15 @@ export function useOtpTimer() {
   const [canResend, setCanResend] = useState(false)
 
   useEffect(() => {
-    if (seconds <= 0) { setCanResend(true); return }
-    const t = setTimeout(() => setSeconds((s) => s - 1), 1000)
-    return () => clearTimeout(t)
+    if (seconds > 0) {
+      const t = setTimeout(() => {
+        setSeconds((s) => {
+          if (s === 1) setCanResend(true)
+          return s - 1
+        })
+      }, 1000)
+      return () => clearTimeout(t)
+    }
   }, [seconds])
 
   /** Resets the timer and disables the resend button */

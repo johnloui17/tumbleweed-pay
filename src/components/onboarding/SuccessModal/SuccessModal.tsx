@@ -4,6 +4,13 @@ import { Button } from '../../ui'
 import { useSuccessModalAction } from './useSuccessModalAction'
 import { useRegistrationStore } from '../../../store/registrationStore'
 
+const SummaryRow = ({ label, value }: { label: string; value: string }) => (
+  <div className="flex justify-between items-center py-1.5">
+    <span className="text-[#94A3B8] font-medium">{label}</span>
+    <span className="text-[#132C4A] font-bold">{value}</span>
+  </div>
+)
+
 /**
  * SuccessModal - Displays a confirmation after successful registration.
  */
@@ -17,13 +24,6 @@ export function SuccessModal() {
     if (user.length <= 2) return `${user}••••@${domain}`
     return `${user.slice(0, 2)}••••@${domain}`
   }
-
-  const SummaryRow = ({ label, value }: { label: string; value: string }) => (
-    <div className="flex justify-between items-center py-1.5">
-      <span className="text-[#94A3B8] font-medium">{label}</span>
-      <span className="text-[#132C4A] font-bold">{value}</span>
-    </div>
-  )
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
