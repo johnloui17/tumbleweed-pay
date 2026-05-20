@@ -9,6 +9,7 @@ import {
 } from 'lucide-react'
 import { Button } from '../../ui'
 import { useRegistrationStore } from '../../../store/registrationStore'
+import { WelcomeIllustration } from './WelcomeIllustration'
 
 /**
  * WelcomeDashboard - An interactive dashboard preview shown after successful registration.
@@ -16,6 +17,11 @@ import { useRegistrationStore } from '../../../store/registrationStore'
  */
 export function WelcomeDashboard() {
   const { firstName, reset } = useRegistrationStore()
+
+  const handleLogout = () => {
+    reset()
+    window.location.href = '/'
+  }
 
   const nextSteps = [
     {
@@ -58,19 +64,23 @@ export function WelcomeDashboard() {
       </header>
 
       <main className="flex-1 px-6 lg:px-20 py-10 lg:py-16 overflow-y-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="max-w-4xl mx-auto"
-        >
-          <div className="mb-12">
-            <h1 className="text-3xl lg:text-4xl font-bold text-[#132C4A] mb-4">
-              Welcome to Tumbleweed Pay, {firstName}! 👋
-            </h1>
-            <p className="text-[#64748B] text-lg lg:text-xl">
-              Your account is ready. Let's get you started with a few simple steps.
-            </p>
+        <div className="max-w-4xl mx-auto">
+          <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-12">
+            <motion.div
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.5 }}
+              className="flex-1 text-center lg:text-left"
+            >
+              <h1 className="text-3xl lg:text-5xl font-bold text-[#132C4A] mb-4">
+                Welcome to Tumbleweed Pay, {firstName}! 👋
+              </h1>
+              <p className="text-[#64748B] text-lg lg:text-xl">
+                Your account is ready. Let's get you started with a few simple steps.
+              </p>
+            </motion.div>
+            
+            <WelcomeIllustration className="w-full max-w-sm lg:w-[400px] flex-shrink-0" />
           </div>
 
           <div className="grid gap-6 mb-12">
@@ -111,13 +121,13 @@ export function WelcomeDashboard() {
             </Button>
             <Button
               variant="ghost"
-              onClick={reset}
+              onClick={handleLogout}
               className="px-8 py-5 text-[#64748B] hover:bg-white font-bold text-lg rounded-full flex-1 sm:flex-none"
             >
               Log Out
             </Button>
           </div>
-        </motion.div>
+        </div>
       </main>
     </div>
   )
