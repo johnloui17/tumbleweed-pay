@@ -20,6 +20,7 @@ const initial: RegistrationState = {
   lastName:    '',
   email:       '',
   password:    '',
+  isCompleted: false,
 }
 
 /**

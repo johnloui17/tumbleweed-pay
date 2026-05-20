@@ -9,6 +9,7 @@ export interface RegistrationState {
   lastName:     string
   email:        string
   password:     string
+  isCompleted:  boolean
 }
 
 export interface StepProps {

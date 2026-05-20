@@ -8,7 +8,8 @@ import {
   PersonalDetailsStep, 
   EmailStep,
   CreatePasswordStep, 
-  SuccessModal 
+  SuccessModal,
+  WelcomeDashboard
 } from './components/onboarding'
 import { useState, useEffect } from 'react'
 import { useRegistrationStore } from './store/registrationStore'
@@ -42,7 +43,7 @@ const STEPS = [
  * Manages step navigation, animated transitions, and the final success state.
  */
 export default function App() {
-  const { currentStep, setStep } = useRegistrationStore()
+  const { currentStep, setStep, isCompleted } = useRegistrationStore()
   const { step, direction, next, back } = useMultiStep(currentStep)
   const [showSuccess, setShowSuccess] = useState(false)
 
@@ -50,6 +51,10 @@ export default function App() {
   useEffect(() => {
     setStep(step)
   }, [step, setStep])
+
+  if (isCompleted) {
+    return <WelcomeDashboard />
+  }
 
   const StepComponent = STEPS[step - 1]
 
