@@ -6,6 +6,7 @@ export interface RegistrationState {
   otp:          string
   firstName:    string
   lastName:     string
+  email:        string
   password:     string
 }
 

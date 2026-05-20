@@ -14,6 +14,7 @@ const initial: RegistrationState = {
   otp:         '',
   firstName:   '',
   lastName:    '',
+  email:       '',
   password:    '',
 }
 

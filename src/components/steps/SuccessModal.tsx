@@ -35,7 +35,7 @@ export function SuccessModal() {
         <div className="bg-[#F8F9FB] rounded-[24px] p-6 space-y-4 mb-6">
           {[
             ['Account type', store.accountType === 'personal' ? 'Personal' : 'Business'],
-            ['Email',        'jo••••@example.com'],
+            ['Email',        store.email],
             ['Name',         `${store.firstName} ${store.lastName}`],
             ['Mobile Number', maskMobile(store.mobile)],
           ].map(([label, value]) => (

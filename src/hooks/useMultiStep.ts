@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import type { Direction } from '../types/registration.types'
 
-const TOTAL_STEPS = 5
+const TOTAL_STEPS = 6
 
 /**
  * useMultiStep - Hook for managing multi-step navigation.

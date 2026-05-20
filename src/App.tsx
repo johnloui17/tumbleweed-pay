@@ -6,6 +6,7 @@ import {
   MobileNumberStep, 
   OtpVerificationStep, 
   PersonalDetailsStep, 
+  EmailStep,
   CreatePasswordStep, 
   SuccessModal 
 } from './components/steps'
@@ -31,6 +32,7 @@ const STEPS = [
   MobileNumberStep, 
   OtpVerificationStep, 
   PersonalDetailsStep, 
+  EmailStep,
   CreatePasswordStep
 ]
 
@@ -45,7 +47,7 @@ export default function App() {
   const StepComponent = STEPS[step - 1]
 
   const handleNext = () => {
-    if (step === 5) setShowSuccess(true)
+    if (step === 6) setShowSuccess(true)
     else next()
   }
 
