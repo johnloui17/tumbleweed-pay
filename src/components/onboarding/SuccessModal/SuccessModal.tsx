@@ -18,13 +18,6 @@ export function SuccessModal() {
   const { handleDone } = useSuccessModalAction()
   const { accountType, email, firstName, lastName, mobile } = useRegistrationStore()
 
-  const maskEmail = (emailStr: string) => {
-    if (!emailStr) return ''
-    const [user, domain] = emailStr.split('@')
-    if (user.length <= 2) return `${user}••••@${domain}`
-    return `${user.slice(0, 2)}••••@${domain}`
-  }
-
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm">
       <motion.div
@@ -46,7 +39,7 @@ export function SuccessModal() {
 
         <div className="w-full bg-[#F8F9FA] rounded-2xl p-6 mb-8 text-sm lg:text-base">
           <SummaryRow label="Account Type" value={accountType || 'Personal'} />
-          <SummaryRow label="Email" value={maskEmail(email)} />
+          <SummaryRow label="Email" value={email} />
           <SummaryRow label="Name" value={`${firstName} ${lastName}`} />
           <SummaryRow label="Mobile Number" value={mobile} />
         </div>
