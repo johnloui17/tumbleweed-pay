@@ -51,7 +51,7 @@ export function OtpVerificationStep({ onNext, onBack }: Props) {
               )}
             />
             
-            <div className="flex justify-end items-center gap-1 text-sm">
+            <div className="flex justify-start items-center gap-1 text-sm">
               <p className="text-[#64748B]">Did not receive OTP?</p>
               <button
                 type="button"

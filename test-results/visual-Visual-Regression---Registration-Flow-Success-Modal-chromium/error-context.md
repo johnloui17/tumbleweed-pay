@@ -12,14 +12,86 @@
 # Error details
 
 ```
-Test timeout of 30000ms exceeded.
-```
+Error: expect(page).toHaveScreenshot(expected) failed
 
-```
-Error: page.fill: Test timeout of 30000ms exceeded.
+  196207 pixels (ratio 0.22 of all image pixels) are different.
+
+  Snapshot: success-modal.png
+
 Call log:
-  - waiting for locator('input[type="tel"]')
+  - Expect "toHaveScreenshot(success-modal.png)" with timeout 5000ms
+    - verifying given screenshot expectation
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - 169472 pixels (ratio 0.19 of all image pixels) are different.
+  - waiting 100ms before taking screenshot
+  - taking page screenshot
+    - disabled all CSS animations
+  - waiting for fonts to load...
+  - fonts loaded
+  - captured a stable screenshot
+  - 196207 pixels (ratio 0.22 of all image pixels) are different.
 
+```
+
+# Page snapshot
+
+```yaml
+- main [ref=e4]:
+  - generic:
+    - img
+  - generic [ref=e5]:
+    - generic [ref=e6]:
+      - paragraph [ref=e7]: Let’s get started
+      - heading "Create your account" [level=1] [ref=e8]
+      - paragraph [ref=e9]: Follow the steps to create your account
+    - img "Registration illustration" [ref=e11]
+  - generic [ref=e16]:
+    - generic [ref=e18]:
+      - generic [ref=e19]:
+        - heading "Create Password for your account" [level=2] [ref=e20]
+        - generic [ref=e21]:
+          - generic [ref=e22]:
+            - text: Enter new password
+            - generic [ref=e23]:
+              - textbox "Enter new password" [ref=e24]: Password123
+              - button [ref=e25] [cursor=pointer]:
+                - img [ref=e26]
+            - paragraph [ref=e29]: Must be atleast 6 characters
+          - generic [ref=e30]:
+            - text: Confirm password
+            - generic [ref=e31]:
+              - textbox "Confirm password" [ref=e32]: Password123
+              - button [ref=e33] [cursor=pointer]:
+                - img [ref=e34]
+            - paragraph [ref=e37]: Both passwords must match
+      - generic [ref=e38]:
+        - button "Back" [ref=e39] [cursor=pointer]
+        - button "Continue" [active] [ref=e40] [cursor=pointer]
+    - dialog "Account created successfully" [ref=e42]:
+      - generic [ref=e43]:
+        - img [ref=e45]
+        - heading "You're all set!" [level=2] [ref=e47]
+        - paragraph [ref=e48]: Here's a quick summary of your account details
+      - generic [ref=e49]:
+        - generic [ref=e50]:
+          - generic [ref=e51]: Account type
+          - generic [ref=e52]: Personal
+        - generic [ref=e53]:
+          - generic [ref=e54]: Email
+          - generic [ref=e55]: jo••••@example.com
+        - generic [ref=e56]:
+          - generic [ref=e57]: Name
+          - generic [ref=e58]: John Doe
+        - generic [ref=e59]:
+          - generic [ref=e60]: Mobile Number
+          - generic [ref=e61]: 8343••9239
+      - generic [ref=e62]:
+        - img [ref=e63]
+        - generic [ref=e66]: Your account is secured with bank-grade security protocols
+      - button "Go to Dashboard" [ref=e67] [cursor=pointer]
 ```
 
 # Test source
@@ -84,8 +156,7 @@ Call log:
   57 |     await page.goto('/')
   58 |     await page.click('text=Personal')
   59 |     await page.click('button:has-text("Continue")')
-> 60 |     await page.fill('input[type="tel"]', '8343989239')
-     |                ^ Error: page.fill: Test timeout of 30000ms exceeded.
+  60 |     await page.fill('input[type="tel"]', '8343989239')
   61 |     await page.click('button:has-text("Continue")')
   62 |     await page.fill('input[aria-label="OTP digit 1"]', '1')
   63 |     await page.fill('input[aria-label="OTP digit 2"]', '2')
@@ -95,10 +166,11 @@ Call log:
   67 |     await page.fill('label:has-text("First Name") + input', 'John')
   68 |     await page.fill('label:has-text("Last Name") + input', 'Doe')
   69 |     await page.click('button:has-text("Continue")')
-  70 |     await page.fill('label:has-text("Enter new password") + input', 'Password123')
-  71 |     await page.fill('label:has-text("Confirm password") + input', 'Password123')
+  70 |     await page.fill('label:has-text("Enter new password") + div input', 'Password123')
+  71 |     await page.fill('label:has-text("Confirm password") + div input', 'Password123')
   72 |     await page.click('button:has-text("Continue")')
-  73 |     await expect(page).toHaveScreenshot('success-modal.png')
+> 73 |     await expect(page).toHaveScreenshot('success-modal.png')
+     |                        ^ Error: expect(page).toHaveScreenshot(expected) failed
   74 |   })
   75 | })
   76 | 

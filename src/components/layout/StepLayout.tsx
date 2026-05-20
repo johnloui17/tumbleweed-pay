@@ -18,7 +18,7 @@ export function StepLayout({ children, currentStep }: StepLayoutProps) {
           <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
               <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
-                <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#FAEFE6" strokeWidth="1"/>
+                <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#FAEFE6" strokeWidth="1" />
               </pattern>
             </defs>
             <rect width="100%" height="100%" fill="url(#grid)" />
@@ -37,12 +37,12 @@ export function StepLayout({ children, currentStep }: StepLayoutProps) {
             </p>
           </div>
 
-          <div className="w-full flex-grow flex items-center justify-end overflow-hidden mt-8 lg:mt-0">
-             <img 
-               src="/image.svg" 
-               alt="Registration illustration" 
-               className="w-full max-w-2xl h-auto max-h-full object-contain object-right"
-             />
+          <div className="w-full flex-grow flex items-center justify-end  mt-4 lg:mt-0">
+            <img
+              src="/image.svg"
+              alt="Registration illustration"
+              className="w-full max-w-2xl h-auto max-h-full object-contain object-right translate-y-20"
+            />
           </div>
         </section>
 
@@ -51,7 +51,7 @@ export function StepLayout({ children, currentStep }: StepLayoutProps) {
           <div className="bg-white rounded-2xl shadow-[-16px_4px_35px_rgba(0,0,0,0.03)] w-full max-w-3xl h-full lg:h-[calc(100vh-theme(spacing.28))] lg:max-h-[895px] flex flex-col overflow-hidden">            {/* Progress Bar */}
             {showProgress && (
               <div className="h-1.5 w-full bg-[#E2E8F0] flex-shrink-0">
-                <div 
+                <div
                   className="h-full bg-[#0054FD] transition-all duration-500 ease-out"
                   style={{ width: `${progressPercent}%` }}
                 />

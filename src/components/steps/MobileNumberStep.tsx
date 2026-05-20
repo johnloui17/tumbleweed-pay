@@ -1,8 +1,10 @@
+import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { mobileSchema, type MobileFormData } from '../../schemas'
 import { useRegistrationStore } from '../../store/registrationStore'
-import { Button, FormField } from '../ui'
+import { Button, FormField, CountryCodeSelector } from '../ui'
+import { cn } from '../../utils'
 
 interface Props {
   onNext: () => void
@@ -15,6 +17,7 @@ interface Props {
  */
 export function MobileNumberStep({ onNext, onBack }: Props) {
   const { mobile, setField } = useRegistrationStore()
+  const [dialCode, setDialCode] = useState('+1')
   
   const { register, handleSubmit, formState: { errors } } = useForm<MobileFormData>({
     resolver: zodResolver(mobileSchema),
@@ -22,6 +25,7 @@ export function MobileNumberStep({ onNext, onBack }: Props) {
   })
 
   const onSubmit = (data: MobileFormData) => {
+    // We could prepend dialCode here if the backend expects the full number
     setField('mobile', data.mobile)
     onNext()
   }
@@ -37,13 +41,10 @@ export function MobileNumberStep({ onNext, onBack }: Props) {
           <div className="space-y-2">
             <label className="text-[#94A3B8] text-sm font-medium">Mobile Number*</label>
             <div className="flex gap-4">
-              <div className="flex items-center gap-2 px-4 py-4 rounded-2xl border-[1.5px] border-[#E2E8F0] bg-white min-w-[100px]">
-                <span className="text-xl">🇺🇸</span>
-                <span className="text-gray-900 font-medium">+1</span>
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none" className="text-gray-400">
-                  <path d="M2 4L6 8L10 4" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
+              <CountryCodeSelector 
+                value={dialCode} 
+                onChange={setDialCode} 
+              />
               <input
                 type="tel"
                 placeholder="8343989239"

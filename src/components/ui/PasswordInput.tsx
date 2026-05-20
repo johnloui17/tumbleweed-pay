@@ -1,9 +1,8 @@
 import { useState, forwardRef } from 'react'
-import { FormField } from './FormField'
 import { Eye, EyeOff } from 'lucide-react'
+import { cn } from '../../utils'
 
 interface PasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
-  label: string
   error?: string
 }
 

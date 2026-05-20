@@ -12,7 +12,7 @@ export function SuccessModal() {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
-      className="absolute inset-0 bg-black/40 flex items-center justify-center z-50 rounded-3xl backdrop-blur-[2px]"
+      className="fixed inset-0 bg-black/40 flex items-center justify-center z-[100] backdrop-blur-[2px]"
     >
       <motion.div
         initial={{ scale: 0.95, opacity: 0, y: 20 }}
@@ -24,38 +24,38 @@ export function SuccessModal() {
         aria-modal="true"
         aria-label="Account created successfully"
       >
-        <div className="text-center mb-10">
-          <div className="w-16 h-16 rounded-full bg-[#3B6EF7]/10 flex items-center justify-center mx-auto mb-6">
-            <Check className="text-[#3B6EF7]" size={32} strokeWidth={3} />
+        <div className="text-center mb-8">
+          <div className="w-14 h-14 rounded-full border-2 border-[#3B6EF7] flex items-center justify-center mx-auto mb-5">
+            <Check className="text-[#3B6EF7]" size={28} strokeWidth={2.5} />
           </div>
-          <h2 className="text-[28px] font-medium text-[#0F172A] leading-tight">You're all set!</h2>
-          <p className="text-[#94A3B8] text-sm mt-2">Here's a quick summary of your account details</p>
+          <h2 className="text-[28px] font-semibold text-[#0F172A] leading-tight">You’re all set!</h2>
+          <p className="text-[#94A3B8] text-sm mt-1">Here’s a quick summary of your account details</p>
         </div>
 
-        <div className="space-y-4 mb-10">
+        <div className="bg-[#F8F9FB] rounded-[24px] p-6 space-y-4 mb-6">
           {[
             ['Account type', store.accountType === 'personal' ? 'Personal' : 'Business'],
-            ['Email',        'jo••••@example.com'], // Hardcoded as per design
+            ['Email',        'jo••••@example.com'],
             ['Name',         `${store.firstName} ${store.lastName}`],
             ['Mobile Number', maskMobile(store.mobile)],
           ].map(([label, value]) => (
-            <div key={label} className="flex justify-between items-center py-1">
-              <span className="text-[#94A3B8] text-sm font-medium">{label}</span>
+            <div key={label} className="flex justify-between items-center">
+              <span className="text-[#94A3B8] text-sm">{label}</span>
               <span className="text-[#0F172A] text-sm font-semibold">{value}</span>
             </div>
           ))}
         </div>
 
-        <div className="flex items-center gap-3 text-xs text-[#64748B] bg-[#F8F9FC] border border-[#E2E8F0] rounded-2xl p-4 mb-10">
-          <ShieldCheck className="text-[#3B6EF7]" size={20} />
-          <span className="leading-relaxed">Your account is secured with bank-grade security protocols</span>
+        <div className="flex items-center justify-center gap-2 text-[13px] text-[#64748B] mb-8">
+          <ShieldCheck className="text-[#3B6EF7]" size={18} />
+          <span>Your account is secured with bank-grade security</span>
         </div>
 
         <button
-          className="w-full bg-[#3B6EF7] hover:bg-[#2563EB] text-white rounded-full py-5 font-bold text-lg shadow-lg shadow-blue-500/20 active:scale-[0.98] transition-all"
+          className="w-full bg-[#0054FD] hover:bg-[#0044CC] text-white rounded-full py-4 font-semibold text-lg shadow-lg shadow-blue-500/10 active:scale-[0.98] transition-all"
           onClick={() => { window.location.reload() }}
         >
-          Go to Dashboard
+          Go To Dashboard
         </button>
       </motion.div>
     </motion.div>

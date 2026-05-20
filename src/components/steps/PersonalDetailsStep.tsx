@@ -3,6 +3,7 @@ import { zodResolver } from '@hookform/resolvers/zod'
 import { nameSchema, type NameFormData } from '../../schemas'
 import { useRegistrationStore } from '../../store/registrationStore'
 import { Button, FormField } from '../ui'
+import { cn } from '../../utils'
 
 interface Props {
   onNext: () => void
