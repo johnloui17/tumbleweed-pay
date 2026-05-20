@@ -5,7 +5,7 @@ interface ProgressDotsProps {
   totalSteps?: number
 }
 
-export function ProgressDots({ currentStep, totalSteps = 5 }: ProgressDotsProps) {
+export function ProgressDots({ currentStep, totalSteps = 6 }: ProgressDotsProps) {
   return (
     <div className="flex gap-2">
       {Array.from({ length: totalSteps }).map((_, i) => (

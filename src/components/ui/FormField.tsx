@@ -8,21 +8,33 @@ interface FormFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 
 export const FormField = forwardRef<HTMLInputElement, FormFieldProps>(
   ({ label, error, className, id, ...props }, ref) => {
+    const renderLabel = () => {
+      if (label.endsWith('*')) {
+        return (
+          <>
+            {label.slice(0, -1)}
+            <span className="text-error">*</span>
+          </>
+        )
+      }
+      return label
+    }
+
     return (
       <div className="space-y-1.5 w-full">
         <label 
           htmlFor={id} 
-          className="block text-sm font-medium text-gray-700"
+          className="block text-sm font-medium text-[#94A3B8]"
         >
-          {label}
+          {renderLabel()}
         </label>
         <input
           id={id}
           ref={ref}
           className={cn(
-            'block w-full px-4 py-3 rounded-xl border transition-all duration-150 outline-none',
-            'focus:ring-2 focus:ring-brand-500/20 focus:border-brand-500',
-            error ? 'border-error' : 'border-gray-200 hover:border-gray-300',
+            'block w-full px-6 py-4 rounded-2xl border-[1.5px] transition-all duration-150 outline-none text-lg',
+            'focus:border-[#0054FD]',
+            error ? 'border-error' : 'border-[#D9E0E6]',
             className
           )}
           aria-invalid={!!error}

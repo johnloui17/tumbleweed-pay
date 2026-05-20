@@ -1,6 +1,6 @@
 import { Button } from '../../ui'
 import { cn } from '../../../utils'
-import { User, Briefcase, CheckCircle2 } from 'lucide-react'
+import { User, Briefcase, Check } from 'lucide-react'
 import { useAccountTypeForm } from './useAccountTypeForm'
 
 interface Props {
@@ -60,7 +60,7 @@ export function AccountTypeStep({ onNext, onBack }: Props) {
               </div>
               {currentType === opt.id ? (
                 <div className="w-6 h-6 lg:w-7 lg:h-7 rounded-full bg-[#0054FD] flex items-center justify-center">
-                  <CheckCircle2 size={16} className="text-white fill-current" />
+                  <Check size={16} className="text-white" strokeWidth={3} />
                 </div>
               ) : (
                 <div className="w-6 h-6 lg:w-7 lg:h-7 rounded-full border border-[#D9E0E6]" />

@@ -1,6 +1,6 @@
 import { useState, useEffect, useCallback } from 'react'
 
-const COUNTDOWN = 30
+const COUNTDOWN = 5
 
 /**
  * useOtpTimer - Hook for managing an OTP resend countdown.
@@ -11,7 +11,7 @@ const COUNTDOWN = 30
  * @returns {Object} seconds, canResend, resend
  */
 export function useOtpTimer() {
-  const [seconds, setSeconds]   = useState(COUNTDOWN)
+  const [seconds, setSeconds] = useState(COUNTDOWN)
   const [canResend, setCanResend] = useState(false)
 
   useEffect(() => {

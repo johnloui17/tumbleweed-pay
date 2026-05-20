@@ -12,10 +12,14 @@ export function useCreatePasswordForm({ onNext }: UseCreatePasswordFormProps) {
   
   const { register, handleSubmit, watch, formState: { errors } } = useForm<PasswordFormData>({
     resolver: zodResolver(passwordSchema),
-    defaultValues: { password },
+    defaultValues: { 
+      password,
+      confirmPassword: ''
+    },
   })
 
   const passwordValue = watch('password', '')
+  const confirmPasswordValue = watch('confirmPassword', '')
 
   const onSubmit = (data: PasswordFormData) => {
     setField('password', data.password)
@@ -27,6 +31,7 @@ export function useCreatePasswordForm({ onNext }: UseCreatePasswordFormProps) {
     handleSubmit,
     errors,
     onSubmit,
-    passwordValue
+    passwordValue,
+    confirmPasswordValue
   }
 }

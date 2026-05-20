@@ -1,4 +1,4 @@
-import { Button, PasswordInput, PasswordStrength } from '../../ui'
+import { Button, PasswordInput } from '../../ui'
 import { useCreatePasswordForm } from './useCreatePasswordForm'
 
 interface Props {
@@ -16,25 +16,31 @@ export function CreatePasswordStep({ onNext, onBack }: Props) {
     handleSubmit,
     errors,
     onSubmit,
-    passwordValue
   } = useCreatePasswordForm({ onNext })
 
   return (
     <form onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">
       <div className="flex-1 space-y-12">
-        <h2 className="text-[28px] text-[#0F172A] font-medium leading-tight">
-          Create Password
+        <h2 className="text-[28px] text-[#132C4A] font-medium leading-tight">
+          Create Password for your account
         </h2>
 
         <div className="space-y-8">
           <PasswordInput
-            label="Password*"
-            placeholder="At least 8 characters"
+            label="Enter new password"
+            placeholder="Enter new password"
+            hint="Must be atleast 6 characters"
             error={errors.password?.message}
             {...register('password')}
           />
-          
-          <PasswordStrength password={passwordValue} />
+
+          <PasswordInput
+            label="Confirm password"
+            placeholder="Confirm password"
+            hint="Both passwords must match"
+            error={errors.confirmPassword?.message}
+            {...register('confirmPassword')}
+          />
         </div>
       </div>
 

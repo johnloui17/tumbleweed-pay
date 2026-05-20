@@ -69,7 +69,7 @@ test.describe('Visual Regression - Registration Flow', () => {
     await page.click('button:has-text("Continue")')
     await page.fill('label:has-text("Enter new password") + div input', 'Password123')
     await page.fill('label:has-text("Confirm password") + div input', 'Password123')
-    await page.click('button:has-text("Continue")')
+    await page.click('button:has-text("Finish")')
     await expect(page).toHaveScreenshot('success-modal.png')
   })
 })

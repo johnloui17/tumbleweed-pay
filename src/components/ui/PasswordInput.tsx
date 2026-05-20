@@ -5,15 +5,28 @@ import { cn } from '../../utils'
 interface PasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
   error?: string
+  hint?: string
 }
 
 export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
-  ({ label, error, className, ...props }, ref) => {
+  ({ label, error, hint, className, ...props }, ref) => {
     const [show, setShow] = useState(false)
+
+    const renderLabel = () => {
+      if (label && label.endsWith('*')) {
+        return (
+          <>
+            {label.slice(0, -1)}
+            <span className="text-error">*</span>
+          </>
+        )
+      }
+      return label
+    }
 
     return (
       <div className="space-y-2">
-        {label && <label className="text-[#94A3B8] text-sm font-medium">{label}</label>}
+        {label && <label className="text-[#94A3B8] text-sm font-medium">{renderLabel()}</label>}
         <div className="relative">
           <input
             {...props}
@@ -21,7 +34,8 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             type={show ? 'text' : 'password'}
             className={cn(
               "w-full px-6 py-4 pr-14 rounded-2xl border-[1.5px] text-lg outline-none transition-all",
-              error ? "border-error" : "border-[#E2E8F0] focus:border-[#3B6EF7]",
+              "focus:border-[#0054FD]",
+              error ? "border-error" : "border-[#D9E0E6]",
               className
             )}
           />
@@ -34,9 +48,11 @@ export const PasswordInput = forwardRef<HTMLInputElement, PasswordInputProps>(
             {show ? <EyeOff size={22} /> : <Eye size={22} />}
           </button>
         </div>
-        {error && (
+        {error ? (
           <p className="text-sm text-error font-medium pl-2">{error}</p>
-        )}
+        ) : hint ? (
+          <p className="text-sm text-[#94A3B8] font-medium pl-2">{hint}</p>
+        ) : null}
       </div>
     )
   }

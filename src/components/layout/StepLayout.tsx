@@ -6,9 +6,9 @@ interface StepLayoutProps {
 }
 
 export function StepLayout({ children, currentStep }: StepLayoutProps) {
-  // Only show progress bar for steps 2-5
-  const showProgress = currentStep > 1 && currentStep <= 5
-  const progressPercent = ((currentStep - 1) / 4) * 100
+  // Only show progress bar for steps 2-6
+  const showProgress = currentStep > 1 && currentStep <= 6
+  const progressPercent = ((currentStep - 1) / 5) * 100
 
   return (
     <div className="h-screen w-full bg-white flex justify-center overflow-hidden">

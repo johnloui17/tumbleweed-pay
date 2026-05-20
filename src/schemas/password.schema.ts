@@ -4,13 +4,11 @@ export const passwordSchema = z
   .object({
     password: z
       .string()
-      .min(8,          'Must be at least 8 characters')
-      .regex(/[A-Z]/,  'Must contain at least one uppercase letter')
-      .regex(/\d/,     'Must contain at least one number'),
+      .min(6, 'Must be atleast 6 characters'),
     confirmPassword: z.string(),
   })
   .refine((d) => d.password === d.confirmPassword, {
-    message: 'Passwords must match',
+    message: 'Both passwords must match',
     path: ['confirmPassword'],
   })
 
