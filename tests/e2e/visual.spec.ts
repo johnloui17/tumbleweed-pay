@@ -1,0 +1,75 @@
+import { test, expect } from '@playwright/test'
+
+test.describe('Visual Regression - Registration Flow', () => {
+  test('Step 1: Account Type', async ({ page }) => {
+    await page.goto('/')
+    await expect(page).toHaveScreenshot('step-1-account-type.png')
+  })
+
+  test('Step 2: Mobile Number', async ({ page }) => {
+    await page.goto('/')
+    await page.click('text=Personal')
+    await page.click('button:has-text("Continue")')
+    await expect(page).toHaveScreenshot('step-2-mobile.png')
+  })
+
+  test('Step 3: OTP Verification', async ({ page }) => {
+    await page.goto('/')
+    await page.click('text=Personal')
+    await page.click('button:has-text("Continue")')
+    await page.fill('input[type="tel"]', '8343989239')
+    await page.click('button:has-text("Continue")')
+    await expect(page).toHaveScreenshot('step-3-otp.png')
+  })
+
+  test('Step 4: Name', async ({ page }) => {
+    await page.goto('/')
+    await page.click('text=Personal')
+    await page.click('button:has-text("Continue")')
+    await page.fill('input[type="tel"]', '8343989239')
+    await page.click('button:has-text("Continue")')
+    await page.fill('input[aria-label="OTP digit 1"]', '1')
+    await page.fill('input[aria-label="OTP digit 2"]', '2')
+    await page.fill('input[aria-label="OTP digit 3"]', '3')
+    await page.fill('input[aria-label="OTP digit 4"]', '4')
+    await page.click('button:has-text("Continue")')
+    await expect(page).toHaveScreenshot('step-4-name.png')
+  })
+
+  test('Step 5: Password', async ({ page }) => {
+    await page.goto('/')
+    await page.click('text=Personal')
+    await page.click('button:has-text("Continue")')
+    await page.fill('input[type="tel"]', '8343989239')
+    await page.click('button:has-text("Continue")')
+    await page.fill('input[aria-label="OTP digit 1"]', '1')
+    await page.fill('input[aria-label="OTP digit 2"]', '2')
+    await page.fill('input[aria-label="OTP digit 3"]', '3')
+    await page.fill('input[aria-label="OTP digit 4"]', '4')
+    await page.click('button:has-text("Continue")')
+    await page.fill('label:has-text("First Name") + input', 'John')
+    await page.fill('label:has-text("Last Name") + input', 'Doe')
+    await page.click('button:has-text("Continue")')
+    await expect(page).toHaveScreenshot('step-5-password.png')
+  })
+
+  test('Success Modal', async ({ page }) => {
+    await page.goto('/')
+    await page.click('text=Personal')
+    await page.click('button:has-text("Continue")')
+    await page.fill('input[type="tel"]', '8343989239')
+    await page.click('button:has-text("Continue")')
+    await page.fill('input[aria-label="OTP digit 1"]', '1')
+    await page.fill('input[aria-label="OTP digit 2"]', '2')
+    await page.fill('input[aria-label="OTP digit 3"]', '3')
+    await page.fill('input[aria-label="OTP digit 4"]', '4')
+    await page.click('button:has-text("Continue")')
+    await page.fill('label:has-text("First Name") + input', 'John')
+    await page.fill('label:has-text("Last Name") + input', 'Doe')
+    await page.click('button:has-text("Continue")')
+    await page.fill('label:has-text("Enter new password") + input', 'Password123')
+    await page.fill('label:has-text("Confirm password") + input', 'Password123')
+    await page.click('button:has-text("Continue")')
+    await expect(page).toHaveScreenshot('success-modal.png')
+  })
+})

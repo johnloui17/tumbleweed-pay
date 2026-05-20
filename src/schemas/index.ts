@@ -1,0 +1,5 @@
+export * from './account-type.schema'
+export * from './mobile.schema'
+export * from './otp.schema'
+export * from './personal-details.schema'
+export * from './password.schema'
