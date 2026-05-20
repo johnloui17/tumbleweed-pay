@@ -5,7 +5,11 @@ import { Check, ShieldCheck } from 'lucide-react'
 export function SuccessModal() {
   const store = useRegistrationStore()
 
-  const maskMobile = (m: string) => m?.replace(/(\d{4})\d{2}(\d{4})/, '$1••$2') || '9711••7290'
+  const maskEmail = (email: string) => {
+    if (!email) return ''
+    const [local, domain] = email.split('@')
+    return `${local.slice(0, 2)}••••@${domain}`
+  }
 
   return (
     <motion.div
@@ -35,9 +39,9 @@ export function SuccessModal() {
         <div className="bg-[#F8F9FB] rounded-[24px] p-6 space-y-4 mb-6">
           {[
             ['Account type', store.accountType === 'personal' ? 'Personal' : 'Business'],
-            ['Email',        store.email],
+            ['Email',        maskEmail(store.email)],
             ['Name',         `${store.firstName} ${store.lastName}`],
-            ['Mobile Number', maskMobile(store.mobile)],
+            ['Mobile Number', store.mobile],
           ].map(([label, value]) => (
             <div key={label} className="flex justify-between items-center">
               <span className="text-[#94A3B8] text-sm">{label}</span>
@@ -53,7 +57,10 @@ export function SuccessModal() {
 
         <button
           className="w-full bg-[#0054FD] hover:bg-[#0044CC] text-white rounded-full py-4 font-semibold text-lg shadow-lg shadow-blue-500/10 active:scale-[0.98] transition-all"
-          onClick={() => { window.location.reload() }}
+          onClick={() => { 
+            store.reset()
+            window.location.reload() 
+          }}
         >
           Go To Dashboard
         </button>

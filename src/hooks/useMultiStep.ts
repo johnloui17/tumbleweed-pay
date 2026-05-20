@@ -9,10 +9,11 @@ const TOTAL_STEPS = 6
  * Provides current step state, navigation functions, and tracking for the
  * direction of movement (forward/backward) to enable direction-aware transitions.
  * 
+ * @param {number} initialStep - The step to start at (defaults to 1).
  * @returns {Object} step, direction, next, back, isFirst, isLast
  */
-export function useMultiStep() {
-  const [step, setStep]           = useState(1)
+export function useMultiStep(initialStep: number = 1) {
+  const [step, setStep]           = useState(initialStep)
   const [direction, setDirection] = useState<Direction>('forward')
 
   const next = () => {

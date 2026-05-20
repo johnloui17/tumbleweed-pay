@@ -1,6 +1,7 @@
 export type AccountType = 'personal' | 'business'
 
 export interface RegistrationState {
+  currentStep:  number
   accountType:  AccountType | null
   mobile:       string
   otp:          string

@@ -10,7 +10,8 @@ import {
   CreatePasswordStep, 
   SuccessModal 
 } from './components/steps'
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
+import { useRegistrationStore } from './store/registrationStore'
 
 const variants = {
   enter: (dir: 'forward' | 'backward') => ({ 
@@ -41,8 +42,14 @@ const STEPS = [
  * Manages step navigation, animated transitions, and the final success state.
  */
 export default function App() {
-  const { step, direction, next, back } = useMultiStep()
+  const { currentStep, setStep } = useRegistrationStore()
+  const { step, direction, next, back } = useMultiStep(currentStep)
   const [showSuccess, setShowSuccess] = useState(false)
+
+  // Sync the hook's step back to the store
+  useEffect(() => {
+    setStep(step)
+  }, [step, setStep])
 
   const StepComponent = STEPS[step - 1]
 
