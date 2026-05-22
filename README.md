@@ -1,6 +1,6 @@
 # Tumbleweed Pay - Registration Flow
 
-A production-grade, multi-step registration flow built with React 18, TypeScript, and Tailwind CSS. This project follows a strictly organized, type-safe, and test-driven architecture designed for learnability and scalability.
+A production-grade, multi-step registration flow built with React 18, TypeScript, and Tailwind CSS. This project follows a strictly organized and type-safe architecture designed for learnability and scalability.
 
 ## 🚀 Architecture & Learnability
 
@@ -28,7 +28,6 @@ src/
 - **Framer Motion**: Smooth, direction-aware transitions between steps.
 - **React Hook Form + Zod**: High-performance form management with robust schema-based validation.
 - **Zustand**: Lightweight, predictable state management that persists form data across steps.
-- **Playwright**: Comprehensive E2E and visual regression testing.
 
 ## 🛠 Development
 
@@ -41,10 +40,6 @@ npm install
 ```bash
 npm run dev
 ```
-
-### Testing
-- **Unit Tests (Vitest)**: `npm run test`
-- **E2E / Visual Tests (Playwright)**: `npx playwright test`
 
 ### Production Build
 ```bash
