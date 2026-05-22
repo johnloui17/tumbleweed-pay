@@ -1,25 +1,31 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { CountryCodeSelector } from '../../ui'
 import { cn } from '../../../utils'
 import { useMobileNumberForm } from './useMobileNumberForm'
 
 interface Props {
   onNext: () => void
+  onValidationChange: (isValid: boolean) => void
 }
 
 /**
  * MobileNumberStep - The second step of the registration flow.
  * Collects the user's mobile number for verification.
  */
-export const MobileNumberStep = memo(function MobileNumberStep({ onNext }: Props) {
+export const MobileNumberStep = memo(function MobileNumberStep({ onNext, onValidationChange }: Props) {
   const {
     dialCode,
     setDialCode,
     register,
     handleSubmit,
     errors,
+    isValid,
     onSubmit
   } = useMobileNumberForm({ onNext })
+
+  useEffect(() => {
+    onValidationChange(isValid)
+  }, [isValid, onValidationChange])
 
   return (
     <form id="onboarding-form" onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">

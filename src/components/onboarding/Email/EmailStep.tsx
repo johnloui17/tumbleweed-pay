@@ -1,21 +1,27 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { FormField } from '../../ui'
 import { useEmailForm } from './useEmailForm'
 
 interface Props {
   onNext: () => void
+  onValidationChange: (isValid: boolean) => void
 }
 
 /**
  * EmailStep - Collects the user's email address.
  */
-export const EmailStep = memo(function EmailStep({ onNext }: Props) {
+export const EmailStep = memo(function EmailStep({ onNext, onValidationChange }: Props) {
   const {
     register,
     handleSubmit,
     errors,
+    isValid,
     onSubmit
   } = useEmailForm({ onNext })
+
+  useEffect(() => {
+    onValidationChange(isValid)
+  }, [isValid, onValidationChange])
 
   return (
     <form id="onboarding-form" onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">

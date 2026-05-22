@@ -13,9 +13,10 @@ export function useMobileNumberForm({ onNext }: UseMobileNumberFormProps) {
   const setField = useRegistrationStore((state) => state.setField)
   const [dialCode, setDialCode] = useState('+1')
   
-  const { register, handleSubmit, formState: { errors } } = useForm<MobileFormData>({
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm<MobileFormData>({
     resolver: zodResolver(mobileSchema),
     defaultValues: { mobile },
+    mode: 'onChange'
   })
 
   const onSubmit = (data: MobileFormData) => {
@@ -30,6 +31,7 @@ export function useMobileNumberForm({ onNext }: UseMobileNumberFormProps) {
     register,
     handleSubmit,
     errors,
+    isValid,
     onSubmit
   }
 }

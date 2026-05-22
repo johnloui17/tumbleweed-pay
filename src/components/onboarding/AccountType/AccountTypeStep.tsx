@@ -1,10 +1,11 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { cn } from '../../../utils'
 import { User, Briefcase, Check } from 'lucide-react'
 import { useAccountTypeForm } from './useAccountTypeForm'
 
 interface Props {
   onNext: () => void
+  onValidationChange: (isValid: boolean) => void
 }
 
 const OPTIONS = [
@@ -16,14 +17,19 @@ const OPTIONS = [
  * AccountTypeStep - The first step of the registration flow.
  * Allows the user to select between a Personal or Business account.
  */
-export const AccountTypeStep = memo(function AccountTypeStep({ onNext }: Props) {
+export const AccountTypeStep = memo(function AccountTypeStep({ onNext, onValidationChange }: Props) {
   const { 
     currentType, 
     errors, 
+    isValid,
     handleSubmit, 
     onSubmit, 
     handleSelectType 
   } = useAccountTypeForm({ onNext })
+
+  useEffect(() => {
+    onValidationChange(isValid)
+  }, [isValid, onValidationChange])
 
   return (
     <form id="onboarding-form" onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">

@@ -11,9 +11,10 @@ export function useAccountTypeForm({ onNext }: UseAccountTypeFormProps) {
   const accountType = useRegistrationStore((state) => state.accountType)
   const setField = useRegistrationStore((state) => state.setField)
 
-  const { handleSubmit, setValue, watch, formState: { errors } } = useForm<AccountTypeFormData>({
+  const { handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm<AccountTypeFormData>({
     resolver: zodResolver(accountTypeSchema),
     defaultValues: { accountType: accountType || undefined },
+    mode: 'onChange'
   })
 
   const currentType = watch('accountType')
@@ -30,6 +31,7 @@ export function useAccountTypeForm({ onNext }: UseAccountTypeFormProps) {
   return {
     currentType,
     errors,
+    isValid,
     handleSubmit,
     onSubmit,
     handleSelectType,

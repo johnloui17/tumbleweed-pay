@@ -1,26 +1,32 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { Controller } from 'react-hook-form'
 import { OtpInput } from '../../ui'
 import { useOtpVerificationForm } from './useOtpVerificationForm'
 
 interface Props {
   onNext: () => void
+  onValidationChange: (isValid: boolean) => void
 }
 
 /**
  * OtpVerificationStep - The third step of the registration flow.
  * Verifies the user's mobile number via a 4-digit code.
  */
-export const OtpVerificationStep = memo(function OtpVerificationStep({ onNext }: Props) {
+export const OtpVerificationStep = memo(function OtpVerificationStep({ onNext, onValidationChange }: Props) {
   const {
     control,
     handleSubmit,
     errors,
+    isValid,
     onSubmit,
     seconds,
     canResend,
     resend
   } = useOtpVerificationForm({ onNext })
+
+  useEffect(() => {
+    onValidationChange(isValid)
+  }, [isValid, onValidationChange])
 
   return (
     <form id="onboarding-form" onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">

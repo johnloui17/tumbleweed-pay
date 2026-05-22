@@ -12,9 +12,10 @@ export function usePersonalDetailsForm({ onNext }: UsePersonalDetailsFormProps) 
   const lastName = useRegistrationStore((state) => state.lastName)
   const setField = useRegistrationStore((state) => state.setField)
   
-  const { register, handleSubmit, formState: { errors } } = useForm<NameFormData>({
+  const { register, handleSubmit, formState: { errors, isValid } } = useForm<NameFormData>({
     resolver: zodResolver(nameSchema),
     defaultValues: { firstName, lastName },
+    mode: 'onChange'
   })
 
   const onSubmit = (data: NameFormData) => {
@@ -27,6 +28,7 @@ export function usePersonalDetailsForm({ onNext }: UsePersonalDetailsFormProps) 
     register,
     handleSubmit,
     errors,
+    isValid,
     onSubmit
   }
 }

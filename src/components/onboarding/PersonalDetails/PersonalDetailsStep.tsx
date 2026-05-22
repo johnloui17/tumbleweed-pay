@@ -1,22 +1,28 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { FormField } from '../../ui'
 import { usePersonalDetailsForm } from './usePersonalDetailsForm'
 
 interface Props {
   onNext: () => void
+  onValidationChange: (isValid: boolean) => void
 }
 
 /**
  * PersonalDetailsStep - The fourth step of the registration flow.
  * Collects the user's basic personal information.
  */
-export const PersonalDetailsStep = memo(function PersonalDetailsStep({ onNext }: Props) {
+export const PersonalDetailsStep = memo(function PersonalDetailsStep({ onNext, onValidationChange }: Props) {
   const {
     register,
     handleSubmit,
     errors,
+    isValid,
     onSubmit
   } = usePersonalDetailsForm({ onNext })
+
+  useEffect(() => {
+    onValidationChange(isValid)
+  }, [isValid, onValidationChange])
 
   return (
     <form id="onboarding-form" onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">

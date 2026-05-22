@@ -1,22 +1,28 @@
-import { memo } from 'react'
+import { memo, useEffect } from 'react'
 import { PasswordInput } from '../../ui'
 import { useCreatePasswordForm } from './useCreatePasswordForm'
 
 interface Props {
   onNext: () => void
+  onValidationChange: (isValid: boolean) => void
 }
 
 /**
- * CreatePasswordStep - The final step of the registration flow.
- * Allows the user to set a secure password for their new account.
+ * CreatePasswordStep - The fifth step of the registration flow.
+ * Allows the user to set up a secure password.
  */
-export const CreatePasswordStep = memo(function CreatePasswordStep({ onNext }: Props) {
+export const CreatePasswordStep = memo(function CreatePasswordStep({ onNext, onValidationChange }: Props) {
   const {
     register,
     handleSubmit,
     errors,
-    onSubmit,
+    isValid,
+    onSubmit
   } = useCreatePasswordForm({ onNext })
+
+  useEffect(() => {
+    onValidationChange(isValid)
+  }, [isValid, onValidationChange])
 
   return (
     <form id="onboarding-form" onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">

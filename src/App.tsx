@@ -47,6 +47,7 @@ export default function App() {
   const isCompleted = useRegistrationStore((state) => state.isCompleted)
   const { step, direction, next, back } = useMultiStep()
   const [showSuccess, setShowSuccess] = useState(false)
+  const [isStepValid, setIsStepValid] = useState(false)
 
   const StepComponent = STEPS[step - 1]
 
@@ -81,7 +82,7 @@ export default function App() {
               transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
               className="flex-1 flex flex-col"
             >
-              <StepComponent onNext={handleNext} />
+              <StepComponent onNext={handleNext} onValidationChange={setIsStepValid} />
             </motion.div>
           </AnimatePresence>
         </div>
@@ -93,7 +94,7 @@ export default function App() {
               variant="ghost"
               onClick={handleBack}
               disabled={step === 1}
-              className="w-full"
+              className="w-full transition-all duration-200 hover:shadow-[0_0_15px_rgba(0,84,253,0.2)] active:scale-[0.98]"
             >
               Back
             </Button>
@@ -103,7 +104,8 @@ export default function App() {
             <button
               type="submit"
               form="onboarding-form"
-              className="w-full min-w-[16rem] h-12 rounded-full flex items-center justify-center font-[500] text-sm text-white select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0054FD] disabled:opacity-50 disabled:pointer-events-none cursor-pointer bg-[#0054FD] hover:bg-[#0044CC] shadow-md shadow-blue-500/10 hover:shadow-lg hover:shadow-blue-500/20 active:bg-[#003BB3] mx-auto"
+              disabled={!isStepValid}
+              className="w-full min-w-[16rem] h-12 rounded-full flex items-center justify-center font-[500] text-sm text-white select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0054FD] disabled:opacity-50 disabled:pointer-events-none cursor-pointer bg-[#0054FD] transition-all duration-200 hover:shadow-[0_0_15px_rgba(0,84,253,0.4)] active:scale-[0.98] mx-auto"
             >
               <span className="flex items-center justify-center gap-2 w-full whitespace-nowrap px-6">
                 {step === 6 ? 'Finish' : 'Continue'}

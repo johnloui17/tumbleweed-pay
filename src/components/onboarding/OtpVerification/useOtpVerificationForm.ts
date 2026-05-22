@@ -13,9 +13,10 @@ export function useOtpVerificationForm({ onNext }: UseOtpVerificationFormProps) 
   const setField = useRegistrationStore((state) => state.setField)
   const { seconds, canResend, resend } = useOtpTimer()
   
-  const { control, handleSubmit, formState: { errors } } = useForm<OtpFormData>({
+  const { control, handleSubmit, formState: { errors, isValid } } = useForm<OtpFormData>({
     resolver: zodResolver(otpSchema),
     defaultValues: { otp: otp || '' },
+    mode: 'onChange'
   })
 
   const onSubmit = (data: OtpFormData) => {
@@ -27,6 +28,7 @@ export function useOtpVerificationForm({ onNext }: UseOtpVerificationFormProps) 
     control,
     handleSubmit,
     errors,
+    isValid,
     onSubmit,
     seconds,
     canResend,
