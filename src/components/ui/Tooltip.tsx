@@ -6,16 +6,18 @@ interface TooltipProps {
   children: ReactNode
   content?: string
   className?: string
+  isOpen?: boolean
 }
 
-export function Tooltip({ children, content = 'Feature coming soon', className }: TooltipProps) {
-  const [isVisible, setIsVisible] = useState(false)
+export function Tooltip({ children, content = 'Feature coming soon', className, isOpen = false }: TooltipProps) {
+  const [isHovered, setIsHovered] = useState(false)
+  const isVisible = isHovered || isOpen
 
   return (
     <div 
       className={cn("relative inline-block", className)}
-      onMouseEnter={() => setIsVisible(true)}
-      onMouseLeave={() => setIsVisible(false)}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
     >
       {children}
       <AnimatePresence>

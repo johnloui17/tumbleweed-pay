@@ -17,6 +17,8 @@ import { WelcomeIllustration } from './WelcomeIllustration'
 import { ThemeToggle } from './ThemeToggle'
 import { cn } from '../../../utils'
 
+type WalkthroughStep = 'idle' | 'theme' | 'bell' | 'settings' | 'profile' | 'focusing'
+
 /**
  * WelcomeDashboard - An interactive dashboard preview shown after successful registration.
  * Provides a warm welcome and clear next steps for the new user.
@@ -26,7 +28,7 @@ export function WelcomeDashboard() {
   const reset = useRegistrationStore((state) => state.reset)
   const { toggleTheme } = useThemeStore()
   const [showThemeBanner, setShowThemeBanner] = useState(false)
-  const [walkthroughState, setWalkthroughState] = useState<'idle' | 'highlighting' | 'focusing'>('idle')
+  const [walkthroughStep, setWalkthroughStep] = useState<WalkthroughStep>('idle')
 
   useEffect(() => {
     // Show theme banner if not dismissed
@@ -35,34 +37,22 @@ export function WelcomeDashboard() {
       setShowThemeBanner(true)
     }
 
-    let themeTimer1: NodeJS.Timeout
-    let themeTimer2: NodeJS.Timeout
-    let focusTimer: NodeJS.Timeout
+    const timers: NodeJS.Timeout[] = []
 
-    // Start walkthrough sequence
-    const timer = setTimeout(() => {
-      setWalkthroughState('highlighting')
-      
-      // Auto-toggle theme to demonstrate
-      themeTimer1 = setTimeout(() => {
-        toggleTheme()
-      }, 1000) // switch to dark after 1s
-      
-      themeTimer2 = setTimeout(() => {
-        toggleTheme()
-      }, 3000) // switch back to light after 3s
-      
-      focusTimer = setTimeout(() => {
-        setWalkthroughState('focusing')
-      }, 4000)
-    }, 500)
+    // Walkthrough sequence
+    timers.push(setTimeout(() => setWalkthroughStep('theme'), 500))
+    timers.push(setTimeout(() => toggleTheme(), 1500))
+    timers.push(setTimeout(() => toggleTheme(), 3500))
+    
+    // Navbar tooltips one by one
+    timers.push(setTimeout(() => setWalkthroughStep('bell'), 4500))
+    timers.push(setTimeout(() => setWalkthroughStep('settings'), 6000))
+    timers.push(setTimeout(() => setWalkthroughStep('profile'), 7500))
+    
+    // Final focus on logout
+    timers.push(setTimeout(() => setWalkthroughStep('focusing'), 9000))
 
-    return () => {
-      clearTimeout(timer)
-      clearTimeout(themeTimer1)
-      clearTimeout(themeTimer2)
-      clearTimeout(focusTimer)
-    }
+    return () => timers.forEach(clearTimeout)
   }, [toggleTheme])
 
   const dismissBanner = () => {
@@ -96,6 +86,8 @@ export function WelcomeDashboard() {
     }
   ]
 
+  const isDimmed = !['idle', 'focusing'].includes(walkthroughStep)
+
   return (
     <div className="min-h-screen bg-[#F6F7F9] dark:bg-slate-950 flex flex-col transition-colors duration-300">
       <AnimatePresence>
@@ -120,7 +112,7 @@ export function WelcomeDashboard() {
       {/* Dashboard Header */}
       <header className="bg-white dark:bg-slate-900 border-b border-[#E2E8F0] dark:border-slate-800 px-6 lg:px-20 py-4 flex justify-between items-center z-10 relative">
         <motion.div 
-          animate={{ opacity: walkthroughState === 'highlighting' ? 0.3 : 1 }}
+          animate={{ opacity: isDimmed ? 0.3 : 1 }}
           className="flex items-center gap-2"
         >
           <div className="w-8 h-8 bg-[#3B6EF7] rounded-lg flex items-center justify-center">
@@ -129,26 +121,29 @@ export function WelcomeDashboard() {
           <span className="text-[#132C4A] dark:text-white font-bold text-xl">Tumbleweed Pay</span>
         </motion.div>
 
-        <div className="flex items-center gap-4 text-[#94A3B8]">
-          <div className="relative z-20">
+        <div className="flex items-center gap-4 text-[#94A3B8] relative z-20">
+          <motion.div animate={{ opacity: ['idle', 'theme', 'focusing'].includes(walkthroughStep) ? 1 : 0.3 }}>
             <ThemeToggle />
-          </div>
+          </motion.div>
           
-          <motion.div 
-            animate={{ opacity: walkthroughState === 'highlighting' ? 0.3 : 1 }}
-            className="flex items-center gap-4"
-          >
-            <Tooltip>
+          <motion.div animate={{ opacity: ['idle', 'bell', 'focusing'].includes(walkthroughStep) ? 1 : 0.3 }}>
+            <Tooltip content="Notifications" isOpen={walkthroughStep === 'bell'}>
               <Button variant="ghost" size="icon" className="w-10 h-10 rounded-xl border-[#E2E8F0] dark:border-slate-800">
                 <Bell className="w-5 h-5" />
               </Button>
             </Tooltip>
-            <Tooltip>
+          </motion.div>
+
+          <motion.div animate={{ opacity: ['idle', 'settings', 'focusing'].includes(walkthroughStep) ? 1 : 0.3 }}>
+            <Tooltip content="Settings" isOpen={walkthroughStep === 'settings'}>
               <Button variant="ghost" size="icon" className="w-10 h-10 rounded-xl border-[#E2E8F0] dark:border-slate-800">
                 <Settings className="w-5 h-5" />
               </Button>
             </Tooltip>
-            <Tooltip>
+          </motion.div>
+
+          <motion.div animate={{ opacity: ['idle', 'profile', 'focusing'].includes(walkthroughStep) ? 1 : 0.3 }}>
+            <Tooltip content="Account Profile" isOpen={walkthroughStep === 'profile'}>
               <div className="w-10 h-10 bg-brand-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-brand-500 dark:text-brand-400 font-bold text-sm cursor-pointer border border-[#E2E8F0] dark:border-slate-800">
                 {firstName?.[0] || 'U'}
               </div>
@@ -159,7 +154,7 @@ export function WelcomeDashboard() {
 
       <main className="flex-1 px-6 lg:px-20 py-10 lg:py-16 overflow-y-auto">
         <motion.div 
-          animate={{ opacity: walkthroughState === 'highlighting' ? 0.3 : 1 }}
+          animate={{ opacity: isDimmed ? 0.3 : 1 }}
           className="max-w-4xl mx-auto"
         >
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-12">
@@ -223,9 +218,9 @@ export function WelcomeDashboard() {
             <motion.div
               className={cn(
                 "flex-1 sm:flex-none rounded-full transition-all duration-500",
-                walkthroughState === 'focusing' && "gradient-border-loop shadow-lg shadow-blue-500/20"
+                walkthroughStep === 'focusing' && "gradient-border-loop shadow-lg shadow-blue-500/20"
               )}
-              animate={walkthroughState === 'focusing' ? { 
+              animate={walkthroughStep === 'focusing' ? { 
                 scale: [1, 1.03, 1],
               } : { 
                 scale: 1, 
@@ -241,7 +236,7 @@ export function WelcomeDashboard() {
                 onClick={handleLogout}
                 className={cn(
                   "w-full px-8 py-5 text-[#64748B] dark:text-[#94A3B8] hover:bg-white dark:hover:bg-slate-800 font-bold text-lg rounded-full",
-                  walkthroughState === 'focusing' && "bg-white dark:bg-slate-900" 
+                  walkthroughStep === 'focusing' && "bg-white dark:bg-slate-900" 
                 )}
               >
                 Log Out
