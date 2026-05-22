@@ -58,11 +58,7 @@ export default function App() {
     }
   }, [step, next])
 
-  const handleBack = useCallback((e: React.MouseEvent) => {
-    const button = e.currentTarget as HTMLButtonElement
-    button.classList.add('animate-border-flash', 'border-2')
-    setTimeout(() => button.classList.remove('animate-border-flash', 'border-2'), 500)
-    
+  const handleBack = useCallback(() => {
     back()
   }, [back])
 
@@ -107,12 +103,7 @@ export default function App() {
             <button
               type="submit"
               form="onboarding-form"
-              onClick={(e) => {
-                const button = e.currentTarget
-                button.classList.add('animate-border-flash', 'border-2')
-                setTimeout(() => button.classList.remove('animate-border-flash', 'border-2'), 500)
-              }}
-              className="w-full min-w-[16rem] h-12 rounded-full flex items-center justify-center font-[500] text-sm text-white select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0054FD] disabled:opacity-50 disabled:pointer-events-none cursor-pointer bg-[#0054FD] hover:bg-[#0044CC] shadow-md shadow-blue-500/10 hover:shadow-lg hover:shadow-blue-500/20 active:bg-[#003BB3] transition-colors duration-150 mx-auto"
+              className="w-full min-w-[16rem] h-12 rounded-full flex items-center justify-center font-[500] text-sm text-white select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0054FD] disabled:opacity-50 disabled:pointer-events-none cursor-pointer bg-[#0054FD] hover:bg-[#0044CC] shadow-md shadow-blue-500/10 hover:shadow-lg hover:shadow-blue-500/20 active:bg-[#003BB3] mx-auto"
             >
               <span className="flex items-center justify-center gap-2 w-full whitespace-nowrap px-6">
                 {step === 6 ? 'Finish' : 'Continue'}
