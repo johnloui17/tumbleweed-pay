@@ -17,7 +17,8 @@ import { ThemeToggle } from './ThemeToggle'
  * Provides a warm welcome and clear next steps for the new user.
  */
 export function WelcomeDashboard() {
-  const { firstName, reset } = useRegistrationStore()
+  const firstName = useRegistrationStore((state) => state.firstName)
+  const reset = useRegistrationStore((state) => state.reset)
 
   const handleLogout = () => {
     reset()

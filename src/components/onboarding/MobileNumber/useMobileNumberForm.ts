@@ -9,7 +9,8 @@ interface UseMobileNumberFormProps {
 }
 
 export function useMobileNumberForm({ onNext }: UseMobileNumberFormProps) {
-  const { mobile, setField } = useRegistrationStore()
+  const mobile = useRegistrationStore((state) => state.mobile)
+  const setField = useRegistrationStore((state) => state.setField)
   const [dialCode, setDialCode] = useState('+1')
   
   const { register, handleSubmit, formState: { errors } } = useForm<MobileFormData>({

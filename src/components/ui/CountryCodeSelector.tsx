@@ -1,4 +1,4 @@
-import { useState, useRef, useEffect } from 'react'
+import { useState, useRef, useEffect, memo } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { cn } from '../../utils'
 
@@ -23,7 +23,7 @@ interface Props {
   onChange: (dialCode: string) => void
 }
 
-export function CountryCodeSelector({ value, onChange }: Props) {
+export const CountryCodeSelector = memo(function CountryCodeSelector({ value, onChange }: Props) {
   const [isOpen, setIsOpen] = useState(false)
   const containerRef = useRef<HTMLDivElement>(null)
   
@@ -83,4 +83,4 @@ export function CountryCodeSelector({ value, onChange }: Props) {
       )}
     </div>
   )
-}
+})

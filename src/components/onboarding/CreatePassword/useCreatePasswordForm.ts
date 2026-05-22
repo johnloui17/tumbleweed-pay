@@ -8,7 +8,8 @@ interface UseCreatePasswordFormProps {
 }
 
 export function useCreatePasswordForm({ onNext }: UseCreatePasswordFormProps) {
-  const { password, setField } = useRegistrationStore()
+  const password = useRegistrationStore((state) => state.password)
+  const setField = useRegistrationStore((state) => state.setField)
   
   const { register, handleSubmit, watch, formState: { errors } } = useForm<PasswordFormData>({
     resolver: zodResolver(passwordSchema),

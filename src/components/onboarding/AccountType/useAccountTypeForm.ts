@@ -8,7 +8,8 @@ interface UseAccountTypeFormProps {
 }
 
 export function useAccountTypeForm({ onNext }: UseAccountTypeFormProps) {
-  const { accountType, setField } = useRegistrationStore()
+  const accountType = useRegistrationStore((state) => state.accountType)
+  const setField = useRegistrationStore((state) => state.setField)
 
   const { handleSubmit, setValue, watch, formState: { errors } } = useForm<AccountTypeFormData>({
     resolver: zodResolver(accountTypeSchema),

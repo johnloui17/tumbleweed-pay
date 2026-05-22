@@ -8,7 +8,8 @@ interface UseEmailFormProps {
 }
 
 export function useEmailForm({ onNext }: UseEmailFormProps) {
-  const { email, setField } = useRegistrationStore()
+  const email = useRegistrationStore((state) => state.email)
+  const setField = useRegistrationStore((state) => state.setField)
   
   const { register, handleSubmit, formState: { errors } } = useForm<EmailFormData>({
     resolver: zodResolver(emailSchema),

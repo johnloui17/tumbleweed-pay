@@ -8,7 +8,9 @@ interface UsePersonalDetailsFormProps {
 }
 
 export function usePersonalDetailsForm({ onNext }: UsePersonalDetailsFormProps) {
-  const { firstName, lastName, setField } = useRegistrationStore()
+  const firstName = useRegistrationStore((state) => state.firstName)
+  const lastName = useRegistrationStore((state) => state.lastName)
+  const setField = useRegistrationStore((state) => state.setField)
   
   const { register, handleSubmit, formState: { errors } } = useForm<NameFormData>({
     resolver: zodResolver(nameSchema),

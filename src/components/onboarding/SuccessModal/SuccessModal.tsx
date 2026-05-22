@@ -16,7 +16,11 @@ const SummaryRow = ({ label, value }: { label: string; value: string }) => (
  */
 export function SuccessModal() {
   const { handleDone } = useSuccessModalAction()
-  const { accountType, email, firstName, lastName, mobile } = useRegistrationStore()
+  const accountType = useRegistrationStore((state) => state.accountType)
+  const email = useRegistrationStore((state) => state.email)
+  const firstName = useRegistrationStore((state) => state.firstName)
+  const lastName = useRegistrationStore((state) => state.lastName)
+  const mobile = useRegistrationStore((state) => state.mobile)
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/40 backdrop-blur-sm overflow-y-auto">
@@ -53,7 +57,6 @@ export function SuccessModal() {
 
         <Button
           onClick={handleDone}
-          className="w-full py-5 bg-[#3B6EF7] hover:bg-[#2563EB] text-white font-bold text-lg rounded-full shadow-lg shadow-blue-500/20 active:scale-[0.98] transition-all"
         >
           Go To Dashboard
         </Button>

@@ -1,18 +1,22 @@
-import { Button } from '../../ui'
+import { memo } from 'react'
 import { cn } from '../../../utils'
 import { User, Briefcase, Check } from 'lucide-react'
 import { useAccountTypeForm } from './useAccountTypeForm'
 
 interface Props {
   onNext: () => void
-  onBack: () => void
 }
+
+const OPTIONS = [
+  { id: 'personal', label: 'Personal', icon: User },
+  { id: 'business', label: 'Business', icon: Briefcase },
+] as const
 
 /**
  * AccountTypeStep - The first step of the registration flow.
  * Allows the user to select between a Personal or Business account.
  */
-export function AccountTypeStep({ onNext, onBack }: Props) {
+export const AccountTypeStep = memo(function AccountTypeStep({ onNext }: Props) {
   const { 
     currentType, 
     errors, 
@@ -21,20 +25,15 @@ export function AccountTypeStep({ onNext, onBack }: Props) {
     handleSelectType 
   } = useAccountTypeForm({ onNext })
 
-  const options = [
-    { id: 'personal', label: 'Personal', icon: User },
-    { id: 'business', label: 'Business', icon: Briefcase },
-  ] as const
-
   return (
-    <form onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col min-h-[500px]">
+    <form id="onboarding-form" onSubmit={handleSubmit(onSubmit)} className="h-full flex flex-col">
       <div>
         <h2 className="w-full max-w-md text-xl lg:text-2xl font-[400] leading-tight lg:leading-9 tracking-tight text-[#132C4A] mb-8 lg:mb-14">
           To join us tell us <span className="font-semibold">what type of account</span> you are opening
         </h2>
 
         <div className="space-y-4">
-          {options.map((opt) => (
+          {OPTIONS.map((opt) => (
             <button
               key={opt.id}
               type="button"
@@ -72,23 +71,6 @@ export function AccountTypeStep({ onNext, onBack }: Props) {
           )}
         </div>
       </div>
-
-      <div className="flex flex-col sm:flex-row gap-4 mt-auto lg:mt-32 xl:mt-48 pt-8">
-        <Button
-          type="button"
-          variant="ghost"
-          className="w-full sm:w-64 h-12 rounded-full border-[2px] border-[#D9E0E6] text-[#0054FD] font-[500] text-sm hover:bg-gray-50 transition-colors"
-          onClick={onBack}
-        >
-          Back
-        </Button>
-        <Button
-          type="submit"
-          className="w-full sm:w-64 h-12 rounded-full bg-[#0054FD] hover:bg-[#0044CC] text-white font-[500] text-sm transition-all"
-        >
-          Continue
-        </Button>
-      </div>
     </form>
   )
-}
+})

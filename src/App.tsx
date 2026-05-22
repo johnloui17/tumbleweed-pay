@@ -11,8 +11,9 @@ import {
   SuccessModal,
   WelcomeDashboard
 } from './components/onboarding'
-import { useState, useEffect } from 'react'
+import { useState, useCallback } from 'react'
 import { useRegistrationStore } from './store/registrationStore'
+import { Button } from './components/ui'
 
 const variants = {
   enter: (dir: 'forward' | 'backward') => ({ 
@@ -43,42 +44,83 @@ const STEPS = [
  * Manages step navigation, animated transitions, and the final success state.
  */
 export default function App() {
-  const { currentStep, setStep, isCompleted } = useRegistrationStore()
-  const { step, direction, next, back } = useMultiStep(currentStep)
+  const isCompleted = useRegistrationStore((state) => state.isCompleted)
+  const { step, direction, next, back } = useMultiStep()
   const [showSuccess, setShowSuccess] = useState(false)
 
-  // Sync the hook's step back to the store
-  useEffect(() => {
-    setStep(step)
-  }, [step, setStep])
+  const StepComponent = STEPS[step - 1]
+
+  const handleNext = useCallback(() => {
+    if (step === 6) {
+      setShowSuccess(true)
+    } else {
+      next()
+    }
+  }, [step, next])
+
+  const handleBack = useCallback((e: React.MouseEvent) => {
+    const button = e.currentTarget as HTMLButtonElement
+    button.classList.add('animate-border-flash', 'border-2')
+    setTimeout(() => button.classList.remove('animate-border-flash', 'border-2'), 500)
+    
+    back()
+  }, [back])
 
   if (isCompleted) {
     return <WelcomeDashboard />
   }
 
-  const StepComponent = STEPS[step - 1]
-
-  const handleNext = () => {
-    if (step === 6) setShowSuccess(true)
-    else next()
-  }
-
   return (
     <StepLayout currentStep={step}>
-      <AnimatePresence mode="wait" custom={direction}>
-        <motion.div
-          key={step}
-          custom={direction}
-          variants={variants}
-          initial="enter"
-          animate="center"
-          exit="exit"
-          transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
-          className="h-full"
-        >
-          <StepComponent onNext={handleNext} onBack={back} />
-        </motion.div>
-      </AnimatePresence>
+      <div className="flex-1 flex flex-col justify-between h-full">
+        <div className="flex-grow flex flex-col justify-start">
+          <AnimatePresence mode="wait" custom={direction}>
+            <motion.div
+              key={step}
+              custom={direction}
+              variants={variants}
+              initial="enter"
+              animate="center"
+              exit="exit"
+              transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+              className="flex-1 flex flex-col"
+            >
+              <StepComponent onNext={handleNext} />
+            </motion.div>
+          </AnimatePresence>
+        </div>
+
+        <div className="flex flex-col sm:flex-row gap-4 pt-8 mt-8 border-t border-[#F1F5F9] dark:border-slate-800/40">
+          <div className="w-full sm:w-auto">
+            <Button
+              type="button"
+              variant="ghost"
+              onClick={handleBack}
+              disabled={step === 1}
+              className="w-full"
+            >
+              Back
+            </Button>
+          </div>
+          
+          <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 relative flex justify-center sm:justify-end">
+            <button
+              type="submit"
+              form="onboarding-form"
+              onClick={(e) => {
+                const button = e.currentTarget
+                button.classList.add('animate-border-flash', 'border-2')
+                setTimeout(() => button.classList.remove('animate-border-flash', 'border-2'), 500)
+              }}
+              className="w-full min-w-[16rem] h-12 rounded-full flex items-center justify-center font-[500] text-sm text-white select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0054FD] disabled:opacity-50 disabled:pointer-events-none cursor-pointer bg-[#0054FD] hover:bg-[#0044CC] shadow-md shadow-blue-500/10 hover:shadow-lg hover:shadow-blue-500/20 active:bg-[#003BB3] transition-colors duration-150 mx-auto"
+            >
+              <span className="flex items-center justify-center gap-2 w-full whitespace-nowrap px-6">
+                {step === 6 ? 'Finish' : 'Continue'}
+              </span>
+            </button>
+          </div>
+        </div>
+      </div>
 
       <AnimatePresence>
         {showSuccess && <SuccessModal />}

@@ -9,7 +9,8 @@ interface UseOtpVerificationFormProps {
 }
 
 export function useOtpVerificationForm({ onNext }: UseOtpVerificationFormProps) {
-  const { otp, setField } = useRegistrationStore()
+  const otp = useRegistrationStore((state) => state.otp)
+  const setField = useRegistrationStore((state) => state.setField)
   const { seconds, canResend, resend } = useOtpTimer()
   
   const { control, handleSubmit, formState: { errors } } = useForm<OtpFormData>({
