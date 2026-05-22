@@ -16,7 +16,7 @@ export function useOtpVerificationForm({ onNext }: UseOtpVerificationFormProps) 
   const { control, handleSubmit, formState: { errors, isValid } } = useForm<OtpFormData>({
     resolver: zodResolver(otpSchema),
     defaultValues: { otp: otp || '' },
-    mode: 'onChange'
+    mode: 'onSubmit'
   })
 
   const onSubmit = (data: OtpFormData) => {
