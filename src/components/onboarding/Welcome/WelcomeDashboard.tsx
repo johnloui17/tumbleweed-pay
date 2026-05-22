@@ -1,16 +1,21 @@
-import { motion } from 'framer-motion'
+import { motion, AnimatePresence } from 'framer-motion'
 import { 
   ShieldCheck, 
   Wallet, 
   ArrowRight, 
   Search, 
   Settings, 
-  Bell 
+  Bell,
+  X,
+  Moon 
 } from 'lucide-react'
+import { useState, useEffect } from 'react'
 import { Button, Tooltip } from '../../ui'
 import { useRegistrationStore } from '../../../store/registrationStore'
+import { useThemeStore } from '../../../store/themeStore'
 import { WelcomeIllustration } from './WelcomeIllustration'
 import { ThemeToggle } from './ThemeToggle'
+import { cn } from '../../../utils'
 
 /**
  * WelcomeDashboard - An interactive dashboard preview shown after successful registration.
@@ -19,6 +24,51 @@ import { ThemeToggle } from './ThemeToggle'
 export function WelcomeDashboard() {
   const firstName = useRegistrationStore((state) => state.firstName)
   const reset = useRegistrationStore((state) => state.reset)
+  const { toggleTheme } = useThemeStore()
+  const [showThemeBanner, setShowThemeBanner] = useState(false)
+  const [walkthroughState, setWalkthroughState] = useState<'idle' | 'highlighting' | 'focusing'>('idle')
+
+  useEffect(() => {
+    // Show theme banner if not dismissed
+    const dismissed = localStorage.getItem('themeBannerDismissed')
+    if (!dismissed) {
+      setShowThemeBanner(true)
+    }
+
+    let themeTimer1: NodeJS.Timeout
+    let themeTimer2: NodeJS.Timeout
+    let focusTimer: NodeJS.Timeout
+
+    // Start walkthrough sequence
+    const timer = setTimeout(() => {
+      setWalkthroughState('highlighting')
+      
+      // Auto-toggle theme to demonstrate
+      themeTimer1 = setTimeout(() => {
+        toggleTheme()
+      }, 1000) // switch to dark after 1s
+      
+      themeTimer2 = setTimeout(() => {
+        toggleTheme()
+      }, 3000) // switch back to light after 3s
+      
+      focusTimer = setTimeout(() => {
+        setWalkthroughState('focusing')
+      }, 4000)
+    }, 500)
+
+    return () => {
+      clearTimeout(timer)
+      clearTimeout(themeTimer1)
+      clearTimeout(themeTimer2)
+      clearTimeout(focusTimer)
+    }
+  }, [toggleTheme])
+
+  const dismissBanner = () => {
+    setShowThemeBanner(false)
+    localStorage.setItem('themeBannerDismissed', 'true')
+  }
 
   const handleLogout = () => {
     reset()
@@ -48,36 +98,70 @@ export function WelcomeDashboard() {
 
   return (
     <div className="min-h-screen bg-[#F6F7F9] dark:bg-slate-950 flex flex-col transition-colors duration-300">
+      <AnimatePresence>
+        {showThemeBanner && (
+          <motion.div
+            initial={{ height: 0, opacity: 0 }}
+            animate={{ height: 'auto', opacity: 1 }}
+            exit={{ height: 0, opacity: 0 }}
+            className="bg-[#3B6EF7] text-white px-6 py-3 flex items-center justify-between z-50"
+          >
+            <div className="flex items-center gap-2">
+              <Moon className="w-5 h-5" />
+              <p className="text-sm font-medium">Try out our new Dark Mode for a better experience!</p>
+            </div>
+            <button onClick={dismissBanner} className="text-white/80 hover:text-white">
+              <X className="w-5 h-5" />
+            </button>
+          </motion.div>
+        )}
+      </AnimatePresence>
+
       {/* Dashboard Header */}
-      <header className="bg-white dark:bg-slate-900 border-b border-[#E2E8F0] dark:border-slate-800 px-6 lg:px-20 py-4 flex justify-between items-center z-10">
-        <div className="flex items-center gap-2">
+      <header className="bg-white dark:bg-slate-900 border-b border-[#E2E8F0] dark:border-slate-800 px-6 lg:px-20 py-4 flex justify-between items-center z-10 relative">
+        <motion.div 
+          animate={{ opacity: walkthroughState === 'highlighting' ? 0.3 : 1 }}
+          className="flex items-center gap-2"
+        >
           <div className="w-8 h-8 bg-[#3B6EF7] rounded-lg flex items-center justify-center">
             <span className="text-white font-bold text-xl">T</span>
           </div>
           <span className="text-[#132C4A] dark:text-white font-bold text-xl">Tumbleweed Pay</span>
-        </div>
+        </motion.div>
+
         <div className="flex items-center gap-4 text-[#94A3B8]">
-          <ThemeToggle />
-          <Tooltip>
-            <Button variant="ghost" size="icon" className="w-10 h-10 rounded-xl border-[#E2E8F0] dark:border-slate-800">
-              <Bell className="w-5 h-5" />
-            </Button>
-          </Tooltip>
-          <Tooltip>
-            <Button variant="ghost" size="icon" className="w-10 h-10 rounded-xl border-[#E2E8F0] dark:border-slate-800">
-              <Settings className="w-5 h-5" />
-            </Button>
-          </Tooltip>
-          <Tooltip>
-            <div className="w-10 h-10 bg-brand-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-brand-500 dark:text-brand-400 font-bold text-sm cursor-pointer border border-[#E2E8F0] dark:border-slate-800">
-              {firstName?.[0] || 'U'}
-            </div>
-          </Tooltip>
+          <div className="relative z-20">
+            <ThemeToggle />
+          </div>
+          
+          <motion.div 
+            animate={{ opacity: walkthroughState === 'highlighting' ? 0.3 : 1 }}
+            className="flex items-center gap-4"
+          >
+            <Tooltip>
+              <Button variant="ghost" size="icon" className="w-10 h-10 rounded-xl border-[#E2E8F0] dark:border-slate-800">
+                <Bell className="w-5 h-5" />
+              </Button>
+            </Tooltip>
+            <Tooltip>
+              <Button variant="ghost" size="icon" className="w-10 h-10 rounded-xl border-[#E2E8F0] dark:border-slate-800">
+                <Settings className="w-5 h-5" />
+              </Button>
+            </Tooltip>
+            <Tooltip>
+              <div className="w-10 h-10 bg-brand-100 dark:bg-blue-900/30 rounded-full flex items-center justify-center text-brand-500 dark:text-brand-400 font-bold text-sm cursor-pointer border border-[#E2E8F0] dark:border-slate-800">
+                {firstName?.[0] || 'U'}
+              </div>
+            </Tooltip>
+          </motion.div>
         </div>
       </header>
 
       <main className="flex-1 px-6 lg:px-20 py-10 lg:py-16 overflow-y-auto">
-        <div className="max-w-4xl mx-auto">
+        <motion.div 
+          animate={{ opacity: walkthroughState === 'highlighting' ? 0.3 : 1 }}
+          className="max-w-4xl mx-auto"
+        >
           <div className="flex flex-col lg:flex-row items-center gap-8 lg:gap-12 mb-12">
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -135,24 +219,36 @@ export function WelcomeDashboard() {
                 Start Exploring
               </Button>
             </Tooltip>
+            
             <motion.div
-              animate={{ 
-                scale: [1, 1.02, 1],
-                boxShadow: ["0 0 0 0px rgba(59,110,247,0)", "0 0 20px 2px rgba(59,110,247,0.15)", "0 0 0 0px rgba(59,110,247,0)"]
+              className={cn(
+                "flex-1 sm:flex-none rounded-full transition-all duration-500",
+                walkthroughState === 'focusing' && "gradient-border-loop shadow-lg shadow-blue-500/20"
+              )}
+              animate={walkthroughState === 'focusing' ? { 
+                scale: [1, 1.03, 1],
+              } : { 
+                scale: 1, 
               }}
-              transition={{ duration: 2, repeat: Infinity, ease: "easeInOut" }}
-              className="flex-1 sm:flex-none rounded-full"
+              transition={{ 
+                duration: 2.5, 
+                repeat: Infinity, 
+                ease: "easeInOut" 
+              }}
             >
               <Button
                 variant="ghost"
                 onClick={handleLogout}
-                className="w-full px-8 py-5 text-[#64748B] dark:text-[#94A3B8] hover:bg-white dark:hover:bg-slate-800 font-bold text-lg rounded-full"
+                className={cn(
+                  "w-full px-8 py-5 text-[#64748B] dark:text-[#94A3B8] hover:bg-white dark:hover:bg-slate-800 font-bold text-lg rounded-full",
+                  walkthroughState === 'focusing' && "bg-white dark:bg-slate-900" 
+                )}
               >
                 Log Out
               </Button>
             </motion.div>
           </div>
-        </div>
+        </motion.div>
       </main>
     </div>
   )

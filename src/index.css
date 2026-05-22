@@ -14,4 +14,19 @@
   .step-container {
     @apply min-h-screen flex items-center justify-center p-4;
   }
+
+  /* Rotating Gradient Border */
+  .gradient-border-loop {
+    position: relative;
+    border-radius: 9999px;
+    padding: 2px; /* Border width */
+    background: linear-gradient(90deg, #0054FD, #22C55E, #3B6EF7, #0054FD);
+    background-size: 300% 100%;
+    animation: gradient-loop 3s linear infinite;
+  }
+
+  @keyframes gradient-loop {
+    0% { background-position: 0% 50%; }
+    100% { background-position: 100% 50%; }
+  }
 }
