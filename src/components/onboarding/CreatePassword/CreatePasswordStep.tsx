@@ -44,7 +44,7 @@ export function CreatePasswordStep({ onNext, onBack }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-4 mt-auto pt-10">
+      <div className="flex flex-col sm:flex-row gap-4 mt-auto pt-10">
         <Button 
           type="button" 
           variant="ghost" 

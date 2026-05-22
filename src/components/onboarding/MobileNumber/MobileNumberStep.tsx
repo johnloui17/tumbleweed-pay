@@ -33,7 +33,7 @@ export function MobileNumberStep({ onNext, onBack }: Props) {
             <label className="text-[#94A3B8] text-sm font-medium">
               Mobile Number<span className="text-error">*</span>
             </label>
-            <div className="flex gap-4">
+            <div className="flex gap-2 sm:gap-4">
               <CountryCodeSelector 
                 value={dialCode} 
                 onChange={setDialCode} 
@@ -43,7 +43,7 @@ export function MobileNumberStep({ onNext, onBack }: Props) {
                 placeholder="8343989239"
                 {...register('mobile')}
                 className={cn(
-                  "flex-1 px-6 py-4 rounded-2xl border-[1.5px] text-lg outline-none transition-all",
+                  "flex-1 w-full min-w-0 px-4 sm:px-6 py-4 rounded-2xl border-[1.5px] text-base sm:text-lg outline-none transition-all",
                   "focus:border-[#0054FD]",
                   errors.mobile ? "border-error" : "border-[#D9E0E6]"
                 )}
@@ -56,7 +56,7 @@ export function MobileNumberStep({ onNext, onBack }: Props) {
         </div>
       </div>
 
-      <div className="flex gap-4 mt-auto pt-10">
+      <div className="flex flex-col sm:flex-row gap-4 mt-auto pt-10">
         <Button 
           type="button" 
           variant="ghost" 

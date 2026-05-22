@@ -45,7 +45,7 @@ export function CountryCodeSelector({ value, onChange }: Props) {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className={cn(
-          "flex items-center gap-2 px-4 py-4 rounded-2xl border-[1.5px] border-[#E2E8F0] bg-white hover:border-[#CBD5E1] transition-all min-w-[110px]",
+          "flex items-center gap-1 sm:gap-2 px-3 sm:px-4 py-4 rounded-2xl border-[1.5px] border-[#E2E8F0] bg-white hover:border-[#CBD5E1] transition-all min-w-[90px] sm:min-w-[110px]",
           isOpen && "border-[#3B6EF7] ring-1 ring-[#3B6EF7]/10"
         )}
       >
