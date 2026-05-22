@@ -1,13 +1,13 @@
 import { AnimatePresence, motion } from 'framer-motion'
 import { useMultiStep } from './hooks'
-import { StepLayout }   from './components/layout'
-import { 
-  AccountTypeStep, 
-  MobileNumberStep, 
-  OtpVerificationStep, 
-  PersonalDetailsStep, 
+import { StepLayout } from './components/layout'
+import {
+  AccountTypeStep,
+  MobileNumberStep,
+  OtpVerificationStep,
+  PersonalDetailsStep,
   EmailStep,
-  CreatePasswordStep, 
+  CreatePasswordStep,
   SuccessModal,
   WelcomeDashboard
 } from './components/onboarding'
@@ -17,34 +17,34 @@ import { useValidationStore } from './store/validationStore'
 import { Button } from './components/ui'
 
 const variants = {
-  enter: (dir: 'forward' | 'backward') => ({ 
-    opacity: 0, 
-    x: dir === 'forward' ? 30 : -30 
+  enter: (dir: 'forward' | 'backward') => ({
+    opacity: 0,
+    x: dir === 'forward' ? 30 : -30
   }),
-  center: { 
-    opacity: 1, 
-    x: 0 
+  center: {
+    opacity: 1,
+    x: 0
   },
-  exit: (dir: 'forward' | 'backward') => ({ 
-    opacity: 0, 
-    x: dir === 'forward' ? -30 : 30 
+  exit: (dir: 'forward' | 'backward') => ({
+    opacity: 0,
+    x: dir === 'forward' ? -30 : 30
   }),
 }
 
 const STEPS = [
-  AccountTypeStep, 
-  MobileNumberStep, 
-  OtpVerificationStep, 
-  PersonalDetailsStep, 
+  AccountTypeStep,
+  MobileNumberStep,
+  OtpVerificationStep,
+  PersonalDetailsStep,
   EmailStep,
   CreatePasswordStep
 ]
 
 const Navigation = memo(({ step, back }: { step: number; back: () => void }) => {
   const isValid = useValidationStore((state) => state.isValid)
-  
+
   return (
-    <div className="flex flex-col sm:flex-row gap-4 pt-8 mt-8 border-t border-[#F1F5F9] dark:border-slate-800/40">
+    <div className="flex flex-col sm:flex-row gap-4 pt-8 mt-8  dark:border-slate-800/40">
       <div className="w-full sm:w-auto">
         <Button
           type="button"
@@ -56,7 +56,7 @@ const Navigation = memo(({ step, back }: { step: number; back: () => void }) => 
           Back
         </Button>
       </div>
-      
+
       <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 relative flex justify-center sm:justify-end">
         <Button
           type="submit"
@@ -107,7 +107,7 @@ export default function App() {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ 
+              transition={{
                 duration: 0.2,
                 ease: [0.25, 0.1, 0.25, 1]
               }}
