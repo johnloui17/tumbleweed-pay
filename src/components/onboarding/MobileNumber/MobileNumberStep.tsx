@@ -1,5 +1,5 @@
 import { memo, useEffect } from 'react'
-import { CountryCodeSelector } from '../../ui'
+import { CountryCodeSelector, Label } from '../../ui'
 import { cn } from '../../../utils'
 import { useMobileNumberForm } from './useMobileNumberForm'
 
@@ -36,9 +36,7 @@ export const MobileNumberStep = memo(function MobileNumberStep({ onNext, onValid
 
         <div className="space-y-6">
           <div className="space-y-2">
-            <label className="text-[#94A3B8] text-sm font-medium">
-              Mobile Number<span className="text-error">*</span>
-            </label>
+            <Label>Mobile Number*</Label>
             <div className="flex gap-2 sm:gap-4">
               <CountryCodeSelector 
                 value={dialCode} 

@@ -11,14 +11,15 @@ import {
   SuccessModal,
   WelcomeDashboard
 } from './components/onboarding'
-import { useState, useCallback } from 'react'
+import { useState, useCallback, memo } from 'react'
 import { useRegistrationStore } from './store/registrationStore'
+import { useValidationStore } from './store/validationStore'
 import { Button } from './components/ui'
 
 const variants = {
   enter: (dir: 'forward' | 'backward') => ({ 
     opacity: 0, 
-    x: dir === 'forward' ? 32 : -32 
+    x: dir === 'forward' ? 30 : -30 
   }),
   center: { 
     opacity: 1, 
@@ -26,7 +27,7 @@ const variants = {
   },
   exit: (dir: 'forward' | 'backward') => ({ 
     opacity: 0, 
-    x: dir === 'forward' ? -32 : 32 
+    x: dir === 'forward' ? -30 : 30 
   }),
 }
 
@@ -39,6 +40,37 @@ const STEPS = [
   CreatePasswordStep
 ]
 
+const Navigation = memo(({ step, back }: { step: number; back: () => void }) => {
+  const isValid = useValidationStore((state) => state.isValid)
+  
+  return (
+    <div className="flex flex-col sm:flex-row gap-4 pt-8 mt-8 border-t border-[#F1F5F9] dark:border-slate-800/40">
+      <div className="w-full sm:w-auto">
+        <Button
+          type="button"
+          variant="ghost"
+          onClick={back}
+          disabled={step === 1}
+          className="w-full"
+        >
+          Back
+        </Button>
+      </div>
+      
+      <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 relative flex justify-center sm:justify-end">
+        <Button
+          type="submit"
+          form="onboarding-form"
+          disabled={!isValid}
+          className="mx-auto"
+        >
+          {step === 6 ? 'Finish' : 'Continue'}
+        </Button>
+      </div>
+    </div>
+  )
+})
+
 /**
  * App - Root component of the Registration Flow.
  * Manages step navigation, animated transitions, and the final success state.
@@ -47,7 +79,7 @@ export default function App() {
   const isCompleted = useRegistrationStore((state) => state.isCompleted)
   const { step, direction, next, back } = useMultiStep()
   const [showSuccess, setShowSuccess] = useState(false)
-  const [isStepValid, setIsStepValid] = useState(false)
+  const setValid = useValidationStore((state) => state.setValid)
 
   const StepComponent = STEPS[step - 1]
 
@@ -58,10 +90,6 @@ export default function App() {
       next()
     }
   }, [step, next])
-
-  const handleBack = useCallback(() => {
-    back()
-  }, [back])
 
   if (isCompleted) {
     return <WelcomeDashboard />
@@ -79,40 +107,18 @@ export default function App() {
               initial="enter"
               animate="center"
               exit="exit"
-              transition={{ duration: 0.2, ease: [0.25, 0.1, 0.25, 1] }}
+              transition={{ 
+                duration: 0.2,
+                ease: [0.25, 0.1, 0.25, 1]
+              }}
               className="flex-1 flex flex-col"
             >
-              <StepComponent onNext={handleNext} onValidationChange={setIsStepValid} />
+              <StepComponent onNext={handleNext} onValidationChange={setValid} />
             </motion.div>
           </AnimatePresence>
         </div>
 
-        <div className="flex flex-col sm:flex-row gap-4 pt-8 mt-8 border-t border-[#F1F5F9] dark:border-slate-800/40">
-          <div className="w-full sm:w-auto">
-            <Button
-              type="button"
-              variant="ghost"
-              onClick={handleBack}
-              disabled={step === 1}
-              className="w-full transition-all duration-200 hover:shadow-[0_0_15px_rgba(0,84,253,0.2)] active:scale-[0.98]"
-            >
-              Back
-            </Button>
-          </div>
-          
-          <div className="w-full sm:w-auto flex-grow sm:flex-grow-0 relative flex justify-center sm:justify-end">
-            <button
-              type="submit"
-              form="onboarding-form"
-              disabled={!isStepValid}
-              className="w-full min-w-[16rem] h-12 rounded-full flex items-center justify-center font-[500] text-sm text-white select-none focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-[#0054FD] disabled:opacity-50 disabled:pointer-events-none cursor-pointer bg-[#0054FD] transition-all duration-200 hover:shadow-[0_0_15px_rgba(0,84,253,0.4)] active:scale-[0.98] mx-auto"
-            >
-              <span className="flex items-center justify-center gap-2 w-full whitespace-nowrap px-6">
-                {step === 6 ? 'Finish' : 'Continue'}
-              </span>
-            </button>
-          </div>
-        </div>
+        <Navigation step={step} back={back} />
       </div>
 
       <AnimatePresence>

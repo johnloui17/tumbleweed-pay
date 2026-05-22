@@ -10,7 +10,7 @@ interface UsePersonalDetailsFormProps {
 export function usePersonalDetailsForm({ onNext }: UsePersonalDetailsFormProps) {
   const firstName = useRegistrationStore((state) => state.firstName)
   const lastName = useRegistrationStore((state) => state.lastName)
-  const setField = useRegistrationStore((state) => state.setField)
+  const setFields = useRegistrationStore((state) => state.setFields)
   
   const { register, handleSubmit, formState: { errors, isValid } } = useForm<NameFormData>({
     resolver: zodResolver(nameSchema),
@@ -19,8 +19,7 @@ export function usePersonalDetailsForm({ onNext }: UsePersonalDetailsFormProps) 
   })
 
   const onSubmit = (data: NameFormData) => {
-    setField('firstName', data.firstName)
-    setField('lastName', data.lastName)
+    setFields({ firstName: data.firstName, lastName: data.lastName })
     onNext()
   }
 

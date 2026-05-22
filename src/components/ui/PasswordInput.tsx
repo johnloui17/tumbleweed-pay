@@ -1,6 +1,7 @@
 import { useState, forwardRef, memo } from 'react'
 import { Eye, EyeOff } from 'lucide-react'
 import { cn } from '../../utils'
+import { Label } from './Label'
 
 interface PasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement> {
   label?: string
@@ -10,27 +11,16 @@ interface PasswordInputProps extends React.InputHTMLAttributes<HTMLInputElement>
 
 export const PasswordInput = memo(
   forwardRef<HTMLInputElement, PasswordInputProps>(
-    ({ label, error, hint, className, ...props }, ref) => {
+    ({ label, error, hint, className, id, ...props }, ref) => {
       const [show, setShow] = useState(false)
-
-      const renderLabel = () => {
-        if (label && label.endsWith('*')) {
-          return (
-            <>
-              {label.slice(0, -1)}
-              <span className="text-error">*</span>
-            </>
-          )
-        }
-        return label
-      }
 
       return (
         <div className="space-y-2">
-          {label && <label className="text-[#94A3B8] text-sm font-medium">{renderLabel()}</label>}
+          {label && <Label htmlFor={id}>{label}</Label>}
           <div className="relative">
             <input
               {...props}
+              id={id}
               ref={ref}
               type={show ? 'text' : 'password'}
               className={cn(

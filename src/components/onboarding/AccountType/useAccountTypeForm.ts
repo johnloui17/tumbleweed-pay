@@ -1,4 +1,4 @@
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { accountTypeSchema, type AccountTypeFormData } from '../../../schemas'
 import { useRegistrationStore } from '../../../store/registrationStore'
@@ -11,13 +11,16 @@ export function useAccountTypeForm({ onNext }: UseAccountTypeFormProps) {
   const accountType = useRegistrationStore((state) => state.accountType)
   const setField = useRegistrationStore((state) => state.setField)
 
-  const { handleSubmit, setValue, watch, formState: { errors, isValid } } = useForm<AccountTypeFormData>({
+  const { handleSubmit, setValue, control, formState: { errors, isValid } } = useForm<AccountTypeFormData>({
     resolver: zodResolver(accountTypeSchema),
     defaultValues: { accountType: accountType || undefined },
     mode: 'onChange'
   })
 
-  const currentType = watch('accountType')
+  const currentType = useWatch({
+    control,
+    name: 'accountType'
+  })
 
   const onSubmit = (data: AccountTypeFormData) => {
     setField('accountType', data.accountType)

@@ -27,32 +27,28 @@ export function WelcomeDashboard() {
   const firstName = useRegistrationStore((state) => state.firstName)
   const reset = useRegistrationStore((state) => state.reset)
   const { toggleTheme } = useThemeStore()
-  const [showThemeBanner, setShowThemeBanner] = useState(false)
+  const [showThemeBanner, setShowThemeBanner] = useState(() => {
+    return !localStorage.getItem('themeBannerDismissed')
+  })
   const [walkthroughStep, setWalkthroughStep] = useState<WalkthroughStep>('idle')
 
   useEffect(() => {
-    // Show theme banner if not dismissed
-    const dismissed = localStorage.getItem('themeBannerDismissed')
-    if (!dismissed) {
-      setShowThemeBanner(true)
-    }
-
-    const timers: NodeJS.Timeout[] = []
+    const timers: number[] = []
 
     // Walkthrough sequence
-    timers.push(setTimeout(() => setWalkthroughStep('theme'), 500))
-    timers.push(setTimeout(() => toggleTheme(), 1500))
-    timers.push(setTimeout(() => toggleTheme(), 3500))
+    timers.push(window.setTimeout(() => setWalkthroughStep('theme'), 500))
+    timers.push(window.setTimeout(() => toggleTheme(), 1500))
+    timers.push(window.setTimeout(() => toggleTheme(), 3500))
     
     // Navbar tooltips one by one
-    timers.push(setTimeout(() => setWalkthroughStep('bell'), 4500))
-    timers.push(setTimeout(() => setWalkthroughStep('settings'), 6000))
-    timers.push(setTimeout(() => setWalkthroughStep('profile'), 7500))
+    timers.push(window.setTimeout(() => setWalkthroughStep('bell'), 4500))
+    timers.push(window.setTimeout(() => setWalkthroughStep('settings'), 6000))
+    timers.push(window.setTimeout(() => setWalkthroughStep('profile'), 7500))
     
     // Final focus on logout
-    timers.push(setTimeout(() => setWalkthroughStep('focusing'), 9000))
+    timers.push(window.setTimeout(() => setWalkthroughStep('focusing'), 9000))
 
-    return () => timers.forEach(clearTimeout)
+    return () => timers.forEach(window.clearTimeout)
   }, [toggleTheme])
 
   const dismissBanner = () => {

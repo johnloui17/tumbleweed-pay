@@ -1,5 +1,6 @@
 import { type InputHTMLAttributes, forwardRef, memo } from 'react'
 import { cn } from '../../utils/cn'
+import { Label } from './Label'
 
 interface FormFieldProps extends InputHTMLAttributes<HTMLInputElement> {
   label: string
@@ -9,26 +10,9 @@ interface FormFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 export const FormField = memo(
   forwardRef<HTMLInputElement, FormFieldProps>(
     ({ label, error, className, id, ...props }, ref) => {
-      const renderLabel = () => {
-        if (label.endsWith('*')) {
-          return (
-            <>
-              {label.slice(0, -1)}
-              <span className="text-error">*</span>
-            </>
-          )
-        }
-        return label
-      }
-
       return (
         <div className="space-y-1.5 w-full">
-          <label 
-            htmlFor={id} 
-            className="block text-sm font-medium text-[#94A3B8]"
-          >
-            {renderLabel()}
-          </label>
+          <Label htmlFor={id}>{label}</Label>
           <input
             id={id}
             ref={ref}

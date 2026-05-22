@@ -5,6 +5,8 @@ import type { RegistrationState } from '../types/registration.types'
 interface Store extends RegistrationState {
   /** Updates a specific field in the registration state */
   setField: <K extends keyof RegistrationState>(key: K, value: RegistrationState[K]) => void
+  /** Updates multiple fields in the registration state */
+  setFields: (fields: Partial<RegistrationState>) => void
   /** Updates the current step */
   setStep: (step: number) => void
   /** Resets the registration state to initial values */
@@ -32,9 +34,10 @@ export const useRegistrationStore = create<Store>()(
   persist(
     (set) => ({
       ...initial,
-      setField: (key, value) => set((s) => ({ ...s, [key]: value })),
-      setStep:  (step) => set({ currentStep: step }),
-      reset:    () => {
+      setField:  (key, value) => set((s) => ({ ...s, [key]: value })),
+      setFields: (fields) => set((s) => ({ ...s, ...fields })),
+      setStep:   (step) => set({ currentStep: step }),
+      reset:     () => {
         set(initial)
         localStorage.removeItem('tumbleweed-registration-storage')
       },
