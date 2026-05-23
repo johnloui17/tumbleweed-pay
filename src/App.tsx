@@ -14,7 +14,7 @@ import {
 import { useState, useCallback, memo } from 'react'
 import { useRegistrationStore } from './store/registrationStore'
 import { useValidationStore } from './store/validationStore'
-import { Button } from './components/ui'
+import { Button, CookieConsent } from './components/ui'
 
 const variants = {
   enter: (dir: 'forward' | 'backward') => ({
@@ -97,6 +97,7 @@ export default function App() {
 
   return (
     <StepLayout currentStep={step}>
+      <CookieConsent />
       <div className="flex-1 flex flex-col justify-between h-full">
         <div className="flex-grow flex flex-col justify-start">
           <AnimatePresence mode="wait" custom={direction}>
