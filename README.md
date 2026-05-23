@@ -30,9 +30,6 @@ Tumbleweed Pay is highly optimized for performance, accessibility, best practice
 
 <br />
 
-<p align="left">
-  <img src="public/lighthouse-report.png" alt="Lighthouse Audit Report" width="600" />
-</p>
 
 ---
 
