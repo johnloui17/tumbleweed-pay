@@ -1,33 +1,49 @@
 # Tumbleweed Pay - Registration Flow
 
-A production-grade, multi-step registration flow built with React 18, TypeScript, and Tailwind CSS. This project follows a strictly organized and type-safe architecture designed for learnability and scalability.
+A production-grade, multi-step registration flow built with React 18, TypeScript, and Tailwind CSS. This project follows a strictly organized and type-safe architecture designed for learnability, scalability, and an optimal user experience.
 
-## 🚀 Architecture & Learnability
+## 🏗 Architecture & Design Decisions
 
-The project is organized by **Type/Domain**, using standard naming conventions and barrel exports to ensure a low barrier to entry for new developers.
+The codebase is structured around maintaining a strict separation of concerns, ensuring UI components remain "dumb" while business logic is neatly encapsulated in custom hooks and a global store.
 
-### Directory Structure
+### 1. State Management (Zustand)
+**Decision:** Zustand over Redux or React Context.
+**Rationale:** A multi-step registration flow requires persisting form state across multiple isolated views. Zustand provides a lightweight, hook-based API with zero boilerplate, allowing us to maintain a global state without wrapping the app in complex providers or triggering unnecessary re-renders.
+
+### 2. Form Handling & Validation (React Hook Form + Zod)
+**Decision:** Uncontrolled components paired with schema validation.
+**Rationale:** React Hook Form drastically reduces re-renders by tracking form state at the input level rather than the component level. By integrating Zod, we ensure single-source-of-truth type safety—our validation schemas automatically infer TypeScript types, making the forms robust and predictable.
+
+### 3. Styling & Composition (Tailwind CSS + `cn` utility)
+**Decision:** Utility-first CSS with dynamic class merging.
+**Rationale:** Tailwind allows for rapid, centralized design system implementation (via `tailwind.config.ts`). To maintain clean code, we use a custom `cn` utility (`clsx` + `tailwind-merge`) that gracefully handles conditional classes and resolves specificity conflicts in our atomic UI primitives.
+
+### 4. Fluid Animations (Framer Motion)
+**Decision:** Direction-aware UI transitions.
+**Rationale:** To provide a premium, app-like feel, Framer Motion drives the step transitions. Our custom `useMultiStep` hook tracks the user's navigation vector (forward or backward), dynamically sliding screens in from the correct direction.
+
+## 📂 Directory Structure
 
 ```text
 src/
 ├── components/
 │   ├── layout/       # Shared structural components (StepLayout, ProgressDots)
-│   ├── steps/        # Individual step screens (AccountType, MobileNumber, etc.)
-│   └── ui/           # Atomic UI primitives (Button, FormField, OtpInput)
-├── hooks/            # Custom React hooks (useMultiStep, useOtpTimer)
-├── schemas/          # Zod validation schemas for form steps
-├── store/            # Zustand state management (registrationStore)
-├── types/            # Shared TypeScript interfaces and types
+│   ├── onboarding/   # Individual step screens and their custom form hooks
+│   └── ui/           # Atomic, highly reusable UI primitives (Button, FormField)
+├── hooks/            # Global custom React hooks (useMultiStep, useOtpTimer)
+├── schemas/          # Zod validation schemas for every form step
+├── store/            # Zustand state management (registrationStore, themeStore)
+├── types/            # Shared TypeScript interfaces
 └── utils/            # Generic helper functions (cn)
 ```
 
-### Key Technical Choices
+## 🚀 Potential Enhancements
 
-- **Vite + React 18**: Modern, high-performance development environment.
-- **Tailwind CSS**: Utility-first styling with centralized design tokens in `tailwind.config.ts`.
-- **Framer Motion**: Smooth, direction-aware transitions between steps.
-- **React Hook Form + Zod**: High-performance form management with robust schema-based validation.
-- **Zustand**: Lightweight, predictable state management that persists form data across steps.
+While the current implementation is highly functional and robust, future iterations could introduce:
+- **Backend Integration:** Replace the mocked success state with real API endpoints, implementing proper error handling and retry logic for network requests.
+- **Internationalization (i18n):** Abstract hardcoded strings into a localization library (like `react-i18next`) to support multiple languages and regions dynamically.
+- **Advanced Accessibility (a11y):** Enhance screen reader support by adding ARIA live regions to announce step transitions and granular error state focus management.
+- **Telemetry & Funnel Analytics:** Instrument key actions (step completion, drop-offs, validation errors) to gather data on the onboarding funnel performance.
 
 ## 🛠 Development
 
@@ -48,6 +64,6 @@ npm run build
 
 ## 📖 Learnable Patterns
 
-- **Barrel Exports**: Every directory contains an `index.ts` file. This allows for cleaner imports like `import { Button, FormField } from '../ui'`.
-- **Descriptive Naming**: Components and schemas are named after their function (e.g., `OtpVerificationStep.tsx`) rather than their current order, making them easy to reorder or repurpose.
-- **Direction-Aware UI**: The `useMultiStep` hook tracks navigation direction, allowing Framer Motion to slide components left or right based on whether the user is moving forward or backward.
+- **Barrel Exports**: Every directory contains an `index.ts` file, allowing for clean, consolidated imports (e.g., `import { Button, FormField } from '../ui'`).
+- **Hook-Driven Forms**: Each onboarding step pairs its UI component with a custom hook (e.g., `useAccountTypeForm.ts`). This keeps the `.tsx` files focused purely on presentation.
+- **Atomic UI**: Complex screens are built by composing simple, single-responsibility UI components, ensuring visual consistency and easy maintenance across the app.
