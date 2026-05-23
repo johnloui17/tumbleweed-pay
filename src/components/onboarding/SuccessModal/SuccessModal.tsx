@@ -30,7 +30,7 @@ export function SuccessModal() {
         className="w-full max-w-lg bg-white rounded-[32px] p-8 lg:p-12 shadow-2xl flex flex-col items-center my-auto"
       >
         <div className="w-16 h-16 bg-white border-2 border-[#3B6EF7] rounded-full flex items-center justify-center mb-6">
-          <Check className="w-8 h-8 text-[#3B6EF7]" strokeWidth={3} />
+          <Check className="w-8 h-8 text-[#3B6EF7]" strokeWidth={3} aria-hidden="true" />
         </div>
 
         <h3 className="text-3xl font-bold text-[#132C4A] mb-2">
@@ -49,7 +49,7 @@ export function SuccessModal() {
         </div>
 
         <div className="flex items-center gap-2 mb-10">
-          <ShieldCheck className="w-5 h-5 text-[#22C55E]" />
+          <ShieldCheck className="w-5 h-5 text-[#22C55E]" aria-hidden="true" />
           <p className="text-[#64748B] text-sm">
             Your account is secured with bank-grade security
           </p>

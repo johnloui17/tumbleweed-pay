@@ -28,8 +28,30 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <meta name="theme-color" content="#0054FD">
     <link rel="canonical" href="https://tumbleweed-pay.com/register" />
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "SoftwareApplication",
+      "name": "Tumbleweed Pay",
+      "operatingSystem": "Web",
+      "applicationCategory": "FinanceApplication",
+      "description": "Join Tumbleweed Pay for a seamless and secure digital payment experience.",
+      "offers": {
+        "@type": "Offer",
+        "price": "0",
+        "priceCurrency": "USD"
+      }
+    }
+    </script>
   </head>
   <body>
+    <noscript>
+      <div style="padding: 20px; text-align: center; background: #f8d7da; color: #721c24;">
+        For the best experience, Tumbleweed Pay requires JavaScript to be enabled in your browser.
+      </div>
+    </noscript>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>

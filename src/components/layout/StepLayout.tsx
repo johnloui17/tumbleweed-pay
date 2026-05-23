@@ -15,7 +15,7 @@ export function StepLayout({ children, currentStep }: StepLayoutProps) {
       <main className="w-full min-h-screen lg:h-full bg-[#F6F7F9] relative flex flex-col lg:grid lg:grid-cols-[47.5%_52.5%] lg:overflow-hidden">
         {/* Background Grid Pattern Overlay */}
         <div className="absolute inset-0 pointer-events-none z-0">
-          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+          <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
             <defs>
               <pattern id="grid" width="50" height="50" patternUnits="userSpaceOnUse">
                 <path d="M 50 0 L 0 0 0 50" fill="none" stroke="#FAEFE6" strokeWidth="1" />

@@ -18,6 +18,7 @@ export function WelcomeIllustration({ className }: { className?: string }) {
         viewBox="0 0 602 385"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
+        aria-hidden="true"
       >
         {/* Floor shadow */}
         <path fillRule="evenodd" clipRule="evenodd" d="M299.258 194.959C306.097 196.394 311.25 199.463 310.758 201.808C310.266 204.153 304.314 204.893 297.475 203.458C290.636 202.024 285.483 198.955 285.975 196.61C286.467 194.264 292.419 193.525 299.258 194.959Z" fill="#132C4A" fillOpacity={0.1}/>

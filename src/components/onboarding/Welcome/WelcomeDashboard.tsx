@@ -95,11 +95,11 @@ export function WelcomeDashboard() {
             className="bg-[#3B6EF7] text-white px-6 py-3 flex items-center justify-between z-50"
           >
             <div className="flex items-center gap-2">
-              <Moon className="w-5 h-5" />
+              <Moon className="w-5 h-5" aria-hidden="true" />
               <p className="text-sm font-medium">Try out our new Dark Mode for a better experience!</p>
             </div>
-            <button onClick={dismissBanner} className="text-white/80 hover:text-white">
-              <X className="w-5 h-5" />
+            <button onClick={dismissBanner} className="text-white/80 hover:text-white" aria-label="Dismiss banner">
+              <X className="w-5 h-5" aria-hidden="true" />
             </button>
           </motion.div>
         )}
@@ -195,7 +195,7 @@ export function WelcomeDashboard() {
                     }`}>
                       {step.status}
                     </span>
-                    <ArrowRight className="w-5 h-5 text-[#94A3B8] group-hover:text-[#3B6EF7] transition-colors" />
+                    <ArrowRight className="w-5 h-5 text-[#94A3B8] group-hover:text-[#3B6EF7] transition-colors" aria-hidden="true" />
                   </div>
                 </motion.div>
               </Tooltip>
