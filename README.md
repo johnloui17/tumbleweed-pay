@@ -1,6 +1,40 @@
 # Tumbleweed Pay - Registration Flow
 
+### Production Lighthouse Scores (Vercel)
+<p align="left">
+  <img src="https://img.shields.io/badge/Performance-98%25-emerald?style=for-the-badge&logo=lighthouse&logoColor=white" alt="Performance: 98%" />
+  <img src="https://img.shields.io/badge/Accessibility-90%25-emerald?style=for-the-badge&logo=lighthouse&logoColor=white" alt="Accessibility: 90%" />
+  <img src="https://img.shields.io/badge/Best%20Practices-100%25-emerald?style=for-the-badge&logo=lighthouse&logoColor=white" alt="Best Practices: 100%" />
+  <img src="https://img.shields.io/badge/SEO-100%25-emerald?style=for-the-badge&logo=lighthouse&logoColor=white" alt="SEO: 100%" />
+</p>
+
 A production-grade, multi-step registration flow built with React 18, TypeScript, and Tailwind CSS. This project follows a strictly organized and type-safe architecture designed for learnability, scalability, and an optimal user experience.
+
+## ⚡ Production Lighthouse Audit Scores (Vercel)
+
+Tumbleweed Pay is highly optimized for performance, accessibility, best practices, and search engine discoverability. Below are the metrics captured from our latest Lighthouse audit:
+
+| Category | Score | Status |
+| :--- | :---: | :--- |
+| **⚡ Performance** | **98%** | Green / Excellent |
+| **♿ Accessibility** | **90%** | Green / Highly Accessible |
+| **🔒 Best Practices** | **100%** | Perfect score |
+| **🔍 SEO** | **100%** | Perfect score |
+
+### Core Web Vitals & Metrics:
+- **First Contentful Paint (FCP):** `0.7s` (Excellent)
+- **Largest Contentful Paint (LCP):** `1.0s` (Excellent)
+- **Speed Index:** `0.8s` (Excellent)
+- **Total Blocking Time (TBT):** `0ms` (Perfect)
+- **Cumulative Layout Shift (CLS):** `0` (Perfect)
+
+<br />
+
+<p align="left">
+  <img src="public/lighthouse-report.png" alt="Lighthouse Audit Report" width="600" />
+</p>
+
+---
 
 ## 🏗 Architecture & Design Decisions
 
