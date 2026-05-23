@@ -10,6 +10,9 @@
 
 A production-grade, multi-step registration flow built with React 18, TypeScript, and Tailwind CSS. This project follows a strictly organized and type-safe architecture designed for learnability, scalability, and an optimal user experience.
 
+<br />
+
+
 ## ⚡ Production Lighthouse Audit Scores (Vercel)
 
 Tumbleweed Pay is highly optimized for performance, accessibility, best practices, and search engine discoverability. Below are the metrics captured from our latest Lighthouse audit:
@@ -30,6 +33,49 @@ Tumbleweed Pay is highly optimized for performance, accessibility, best practice
 
 <br />
 
+## 🖥 Onboarding Flow Preview
+
+A visual walkthrough of the step-by-step registration flow and the final dashboard UI:
+
+### Step 1: Account Type Selection
+<p align="center">
+  <img src="public/assets/screenshots/account-type.png" alt="Tumbleweed Pay registration - Account type selection screen." width="800" />
+</p>
+
+### Step 2: Mobile Number Input
+<p align="center">
+  <img src="public/assets/screenshots/mobile-number.png" alt="Tumbleweed Pay registration - Mobile number input screen." width="800" />
+</p>
+
+### Step 3: OTP Code Verification
+<p align="center">
+  <img src="public/assets/screenshots/otp-verification.png" alt="Tumbleweed Pay registration - OTP verification screen with 4-digit input code field." width="800" />
+</p>
+
+### Step 4: Personal Details (Name)
+<p align="center">
+  <img src="public/assets/screenshots/personal-details.png" alt="Tumbleweed Pay registration - Personal details screen requesting user first and last name." width="800" />
+</p>
+
+### Step 5: Email Configuration
+<p align="center">
+  <img src="public/assets/screenshots/email-address.png" alt="Tumbleweed Pay registration - Email configuration screen." width="800" />
+</p>
+
+### Step 6: Secure Password Creation
+<p align="center">
+  <img src="public/assets/screenshots/password-creation.png" alt="Tumbleweed Pay registration - Password creation screen with security strength indicator." width="800" />
+</p>
+
+### Step 7: Account Summary & Review (Success Page)
+<p align="center">
+  <img src="public/assets/screenshots/success-page.png" alt="Tumbleweed Pay registration - Account summary page confirming successful registration completion." width="800" />
+</p>
+
+### Step 8: Welcome & Dashboard Overview
+<p align="center">
+  <img src="public/assets/screenshots/welcome-dashboard.png" alt="Tumbleweed Pay welcome page and main dashboard overview screen after successful login." width="800" />
+</p>
 
 ---
 
